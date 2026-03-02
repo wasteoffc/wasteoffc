@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -47,7 +47,7 @@ body::after {
     text-align: center;
 }
 
-/* === НОВЫЙ БЛОК ЗАГОЛОВКА === */
+/* === ЗАГОЛОВОК С ГИФКАМИ === */
 
 .title-wrapper {
     display: flex;
@@ -59,6 +59,25 @@ body::after {
 .side-gif {
     width: 70px;
     height: auto;
+    filter: drop-shadow(0 0 8px rgba(77, 166, 255, 0.7));
+    animation: glowPulse 2.5s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+
+.side-gif:hover {
+    transform: scale(1.1);
+}
+
+@keyframes glowPulse {
+    0% {
+        filter: drop-shadow(0 0 6px rgba(77, 166, 255, 0.6));
+    }
+    50% {
+        filter: drop-shadow(0 0 16px rgba(77, 166, 255, 1));
+    }
+    100% {
+        filter: drop-shadow(0 0 6px rgba(77, 166, 255, 0.6));
+    }
 }
 
 h1 { 
@@ -133,7 +152,6 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 
 <div class="container">
 
-    <!-- Заголовок с гифками -->
     <div class="title-wrapper">
         <img src="https://image2url.com/r2/default/gifs/1772468297460-6593ee6e-0d37-44d1-a4c9-2ebc5eecf898.gif" class="side-gif" alt="gif">
         <h1>wasteoffc</h1>
@@ -212,4 +230,4 @@ progressContainer.addEventListener("click", (e) => {
 </script>
 
 </body>
-</html>
+</html>  
