@@ -8,6 +8,62 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
 
 <style>
+    /* ===== LEVEL 10 EASTER EGG ===== */
+
+#voidOverlay {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    overflow: hidden;
+    animation: voidFlash 0.2s ease-in-out;
+}
+
+#voidOverlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.03) 0px,
+        rgba(255,255,255,0.03) 2px,
+        transparent 2px,
+        transparent 4px
+    );
+    animation: noiseMove 0.1s infinite linear;
+    pointer-events: none;
+}
+
+#voidText {
+    color: #ff0000;
+    font-family: monospace;
+    font-size: 22px;
+    text-align: center;
+    letter-spacing: 3px;
+    animation: textGlitch 0.15s infinite;
+}
+
+@keyframes voidFlash {
+    from { background: white; }
+    to { background: black; }
+}
+
+@keyframes noiseMove {
+    from { transform: translateY(0); }
+    to { transform: translateY(4px); }
+}
+
+@keyframes textGlitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(2px, -2px); }
+    60% { transform: translate(-1px, -1px); }
+    80% { transform: translate(1px, 1px); }
+    100% { transform: translate(0); }
+}
     .contact-section {
     margin-top: 60px;
     text-align: center;
@@ -435,7 +491,78 @@ hackBtn.addEventListener("click", () => {
 
     randomProgress();
 });
+/* ===== VOID PROTOCOL ===== */
 
+const footer = document.querySelector("footer");
+let voidClicks = 0;
+
+footer.addEventListener("click", () => {
+    voidClicks++;
+
+    if (voidClicks === 3) {
+        activateVoid();
+        voidClicks = 0;
+    }
+
+    setTimeout(() => voidClicks = 0, 2000);
+});
+
+function activateVoid() {
+
+    const overlay = document.createElement("div");
+    overlay.id = "voidOverlay";
+    overlay.innerHTML = `<div id="voidText"></div>`;
+    document.body.appendChild(overlay);
+
+    // шум через Web Audio (без файла)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const bufferSize = audioCtx.sampleRate * 0.4;
+    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+
+    for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+    }
+
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = buffer;
+    noise.connect(audioCtx.destination);
+    noise.start();
+
+    const text = [
+        "intrusion detected",
+        "unknown presence inside system",
+        "trace failed",
+        "it sees you"
+    ];
+
+    let line = 0;
+    const voidText = document.getElementById("voidText");
+
+    function typeLine() {
+        if (line < text.length) {
+            let i = 0;
+            const current = text[line];
+            const interval = setInterval(() => {
+                if (i < current.length) {
+                    voidText.innerHTML += current[i];
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    voidText.innerHTML += "<br><br>";
+                    line++;
+                    setTimeout(typeLine, 300);
+                }
+            }, 35);
+        }
+    }
+
+    typeLine();
+
+    setTimeout(() => {
+        overlay.remove();
+    }, 5000);
+    }
 /* ПЛЕЕР */
 
 const audio = document.getElementById("audio");
