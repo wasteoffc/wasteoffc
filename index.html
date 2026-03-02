@@ -1,49 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <style>
-  body {<div class="background"></div>
-<div class="overlay"></div>
-
-<div class="content">
-  Твой текст поверх GIF
-</div>
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  .background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("https://image2url.com/r2/default/gifs/1772462967699-88bdbe28-5b0c-4781-b17a-b92d2ea26ec9.gif");
-    background-size: cover;
-    background-position: center;
-    z-index: -2;
-  }
-
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* затемнение */
-    z-index: -1;
-  }
-
-  .content {
-    position: relative;
-    color: white;
-    text-align: center;
-    top: 40%;
-    font-size: 2rem;
-  }
-</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>wasteoffc</title>
@@ -55,15 +12,32 @@ body {
     height: 100vh;
     color: white;
     overflow-x: hidden;
-    background: linear-gradient(-45deg, #0f0f0f, #1a1a1a, #111, #1f1f1f);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
+    position: relative;
 }
 
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+/* GIF фон */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("https://image2url.com/r2/default/gifs/1772462967699-88bdbe28-5b0c-4781-b17a-b92d2ea26ec9.gif") no-repeat center center;
+    background-size: cover;
+    z-index: -2;
+}
+
+/* затемнение */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -1;
 }
 
 .container {
@@ -126,7 +100,7 @@ li { margin: 8px 0; color: #ddd; }
     border-radius: 10px;
 }
 
-footer { margin-top: 40px; font-size: 14px; color: #666; }
+footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 </style>
 </head>
 
@@ -135,12 +109,11 @@ footer { margin-top: 40px; font-size: 14px; color: #666; }
 <div class="container">
     <h1>wasteoffc</h1>
     <p class="subtitle">
-        </h2>hehim > theythem sx6sp4sp9 choleric<h2>
-<img src="https://image2url.com/r2/default/gifs/1772462967699-88bdbe28-5b0c-4781-b17a-b92d2ea26ec9.gif" alt="ㅤ">
+        hehim > theythem sx6sp4sp9 choleric
+    </p>
 
-            
     <div class="section">
-        <h2>luv list <3</h2>
+        <h2>luv list &lt;3</h2>
         <ul>
             <li>Konch I lv u sm</li>
             <li>Korffius , Leon , Terenty , Korka</li>
@@ -150,25 +123,14 @@ footer { margin-top: 40px; font-size: 14px; color: #666; }
     <div class="section">
         <h2>my fandoms</h2>
         <ul>
-            <li>BASEketball , Genshin impact , Honkai Star Rail , Hunter x Hunter ,
-            Jujutsu Kaisen , Chainsaw man , Hazbin hotel , Helluva boss , Heavy rain ,
-            Mouthwashing , Papers please , Night in the woods , No I'm not a human , Mortal Kombat , 
-            Alien stage , Countryhumans , FNaF , Twitch , RuRave , Evangelion , Milk inside a bag of milk , 
-            Suicide boy , Beastars , Everything but your life , Blue period , Devil my cry , Cookie run games ,
-            Brawl stars , Homestuck , Slow damage , The Summer Hikaru dead , A room without windows , Watajel ,
-            Se trata de Nada , South Park , Kamisama kiss , Fight club , American psycho , Metal Family , 
-            Дух моей общаги , Regretevator , Ryan Gosling's films , Scott Pilgrim , Mob psycho 100 , Chiikawa ,
-            Cats warriors , Eurovision , I love Amy , One wheat mark , Spooky month , Toilet-bound Hanako-kun ,
-           The promise of hope n etc </li>
+            <li>BASEketball , Genshin impact , Honkai Star Rail , Hunter x Hunter , Jujutsu Kaisen , Chainsaw man , Hazbin hotel , Helluva boss , Heavy rain , Mouthwashing , Papers please , Night in the woods , No I'm not a human , Mortal Kombat , Alien stage , Countryhumans , FNaF , Twitch , RuRave , Evangelion , Milk inside a bag of milk , Suicide boy , Beastars , Everything but your life , Blue period , Devil may cry , Cookie run games , Brawl stars , Homestuck , Slow damage , The Summer Hikaru dead , A room without windows , Watajel , Se trata de Nada , South Park , Kamisama kiss , Fight club , American psycho , Metal Family , Дух моей общаги , Regretevator , Ryan Gosling's films , Scott Pilgrim , Mob psycho 100 , Chiikawa , Cats warriors , Eurovision , I love Amy , One wheat mark , Spooky month , Toilet-bound Hanako-kun , The promise of hope n etc</li>
         </ul>
     </div>
 
     <div class="section">
         <h2>kinn list</h2>
         <ul>
-            <li>Killua , Chrollo , Norman jayden , Kyle Broflovski , Mae Borowski , Nero , Vicho , Jimmy , Vox , 
-         Husk , Lucifer , Blitz , Scaramouche , Skirk , Blade , Luka , Narrator , Song gi tae , Ayanami Rei ,
-            Антон Звездочкин , Towa , Tomoe , Yoshiki , Samuel </li>
+            <li>Killua , Chrollo , Norman jayden , Kyle Broflovski , Mae Borowski , Nero , Vicho , Jimmy , Vox , Husk , Lucifer , Blitz , Scaramouche , Skirk , Blade , Luka , Narrator , Song gi tae , Ayanami Rei , Антон Звездочкин , Towa , Tomoe , Yoshiki , Samuel</li>
         </ul>
     </div>
 
@@ -182,8 +144,8 @@ footer { margin-top: 40px; font-size: 14px; color: #666; }
     <footer>© 2026 wasteoffc</footer>
 </div>
 
-<audio id="audio">
-    <source src="music.mp3" type="audio/mpeg">
+<audio id="audio" loop>
+    <source src="nezhnoe-elektrichestvo.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -191,6 +153,8 @@ const audio = document.getElementById("audio");
 const playBtn = document.getElementById("playBtn");
 const progress = document.getElementById("progress");
 const progressContainer = document.getElementById("progressContainer");
+
+audio.volume = 0.7;
 
 playBtn.addEventListener("click", () => {
     if (audio.paused) {
