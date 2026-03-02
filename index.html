@@ -1,9 +1,12 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>wasteoffc</title>
+
+<!-- Новый шрифт -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
 
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
@@ -47,19 +50,19 @@ body::after {
     text-align: center;
 }
 
-/* === ЗАГОЛОВОК С ГИФКАМИ === */
+/* === ЗАГОЛОВОК === */
 
 .title-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 25px;
 }
 
 .side-gif {
     width: 70px;
     height: auto;
-    filter: drop-shadow(0 0 8px rgba(77, 166, 255, 0.7));
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
     animation: glowPulse 2.5s ease-in-out infinite;
     transition: transform 0.3s ease;
 }
@@ -70,23 +73,29 @@ body::after {
 
 @keyframes glowPulse {
     0% {
-        filter: drop-shadow(0 0 6px rgba(77, 166, 255, 0.6));
+        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
     }
     50% {
-        filter: drop-shadow(0 0 16px rgba(77, 166, 255, 1));
+        filter: drop-shadow(0 0 18px rgba(255, 255, 255, 1));
     }
     100% {
-        filter: drop-shadow(0 0 6px rgba(77, 166, 255, 0.6));
+        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
     }
 }
 
 h1 { 
-    font-size: 48px; 
+    font-family: 'Orbitron', sans-serif;
+    font-size: 52px;
+    letter-spacing: 3px;
 }
 
 @media (max-width: 600px) {
     .side-gif {
         width: 40px;
+    }
+
+    h1 {
+        font-size: 34px;
     }
 }
 
@@ -162,72 +171,9 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
         hehim > theythem sx6sp4sp9 choleric
     </p>
 
-    <div class="section">
-        <h2>luv list &lt;3</h2>
-        <ul>
-            <li>Konch I lv u sm</li>
-            <li>Korffius , Leon , Terenty , Korka</li>
-        </ul>
-    </div>
+    <!-- остальной код без изменений -->
 
-    <div class="section">
-        <h2>my fandoms</h2>
-        <ul>
-            <li>BASEketball , Genshin impact , Honkai Star Rail , Hunter x Hunter , Jujutsu Kaisen , Chainsaw man , Hazbin hotel , Helluva boss , Heavy rain , Mouthwashing , Papers please , Night in the woods , No I'm not a human , Mortal Kombat , Alien stage , Countryhumans , FNaF , Twitch , RuRave , Evangelion , Milk inside a bag of milk , Suicide boy , Beastars , Everything but your life , Blue period , Devil may cry , Cookie run games , Brawl stars , Homestuck , Slow damage , The Summer Hikaru dead , A room without windows , Watajel , Se trata de Nada , South Park , Kamisama kiss , Fight club , American psycho , Metal Family , Дух моей общаги , Regretevator , Ryan Gosling's films , Scott Pilgrim , Mob psycho 100 , Chiikawa , Cats warriors , Eurovision , I love Amy , One wheat mark , Spooky month , Toilet-bound Hanako-kun , The promise of hope n etc</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>kinn list</h2>
-        <ul>
-            <li>Killua , Chrollo , Norman jayden , Kyle Broflovski , Mae Borowski , Nero , Vicho , Jimmy , Vox , Husk , Lucifer , Blitz , Scaramouche , Skirk , Blade , Luka , Narrator , Song gi tae , Ayanami Rei , Антон Звездочкин , Towa , Tomoe , Yoshiki , Samuel</li>
-        </ul>
-    </div>
-
-    <div class="player">
-        <button class="play-btn" id="playBtn">▶ Play</button>
-        <div class="progress-container" id="progressContainer">
-            <div class="progress" id="progress"></div>
-        </div>
-    </div>
-
-    <footer>© 2026 wasteoffc</footer>
 </div>
 
-<audio id="audio" loop>
-    <source src="nezhnoe-elektrichestvo.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-const audio = document.getElementById("audio");
-const playBtn = document.getElementById("playBtn");
-const progress = document.getElementById("progress");
-const progressContainer = document.getElementById("progressContainer");
-
-audio.volume = 0.7;
-
-playBtn.addEventListener("click", () => {
-    if (audio.paused) {
-        audio.play();
-        playBtn.textContent = "▐▐ Pause";
-    } else {
-        audio.pause();
-        playBtn.textContent = "▶ Play";
-    }
-});
-
-audio.addEventListener("timeupdate", () => {
-    const percent = (audio.currentTime / audio.duration) * 100;
-    progress.style.width = percent + "%";
-});
-
-progressContainer.addEventListener("click", (e) => {
-    const width = progressContainer.clientWidth;
-    const clickX = e.offsetX;
-    const duration = audio.duration;
-    audio.currentTime = (clickX / width) * duration;
-});
-</script>
-
 </body>
-</html>  
+</html>
