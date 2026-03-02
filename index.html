@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>wasteoffc</title>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+
+body {
+    height: 100vh;
+    color: white;
+    overflow-x: hidden;
+    background: linear-gradient(-45deg, #0f0f0f, #1a1a1a, #111, #1f1f1f);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    max-width: 900px;
+    margin: 80px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 { font-size: 48px; margin-bottom: 10px; }
+.subtitle { color: #aaa; margin-bottom: 40px; }
+
+.section {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.section:hover {
+    transform: scale(1.03);
+    background: rgba(255,255,255,0.1);
+}
+
+.section h2 { margin-bottom: 15px; color: #4da6ff; }
+
+ul { list-style: none; }
+li { margin: 8px 0; color: #ddd; }
+
+.player {
+    margin-top: 30px;
+    padding: 15px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+}
+
+.play-btn {
+    background: #4da6ff;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.progress-container {
+    margin-top: 15px;
+    background: #333;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.progress {
+    height: 8px;
+    width: 0%;
+    background: #4da6ff;
+    border-radius: 10px;
+}
+
+footer { margin-top: 40px; font-size: 14px; color: #666; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>wasteoffc</h1>
+    <p class="subtitle">добро пожаловать на мою страницу</p>
+
+    <div class="section">
+        <h2>друзья</h2>
+        <ul>
+            <li>@username1</li>
+            <li>@username2</li>
+            <li>@username3</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>фандомы</h2>
+        <ul>
+            <li>аниме</li>
+            <li>игры</li>
+            <li>сериалы</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>кинн лист</h2>
+        <ul>
+            <li>персонаж 1</li>
+            <li>персонаж 2</li>
+            <li>персонаж 3</li>
+        </ul>
+    </div>
+
+    <div class="player">
+        <button class="play-btn" id="playBtn">▶ Play</button>
+        <div class="progress-container" id="progressContainer">
+            <div class="progress" id="progress"></div>
+        </div>
+    </div>
+
+    <footer>© 2026 wasteoffc</footer>
+</div>
+
+<audio id="audio">
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const audio = document.getElementById("audio");
+const playBtn = document.getElementById("playBtn");
+const progress = document.getElementById("progress");
+const progressContainer = document.getElementById("progressContainer");
+
+playBtn.addEventListener("click", () => {
+    if (audio.paused) {
+        audio.play();
+        playBtn.textContent = "⏸ Pause";
+    } else {
+        audio.pause();
+        playBtn.textContent = "▶ Play";
+    }
+});
+
+audio.addEventListener("timeupdate", () => {
+    const percent = (audio.currentTime / audio.duration) * 100;
+    progress.style.width = percent + "%";
+});
+
+progressContainer.addEventListener("click", (e) => {
+    const width = progressContainer.clientWidth;
+    const clickX = e.offsetX;
+    const duration = audio.duration;
+    audio.currentTime = (clickX / width) * duration;
+});
+</script>
+
+</body>
+</html>
