@@ -8,6 +8,42 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
 
 <style>
+    .contact-section {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.contact-section h2 {
+    color: white;
+    opacity: 0.8;
+    font-size: 22px;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.contact-icons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    opacity: 0.5;
+    transition: 0.3s ease;
+}
+
+.icon svg {
+    fill: white;
+    width: 100%;
+    height: 100%;
+}
+
+.icon:hover {
+    opacity: 1;
+    transform: scale(1.15);
+}
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
 
 body {
@@ -275,7 +311,31 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
             <div class="progress" id="progress"></div>
         </div>
     </div>
+<div class="contact-section">
+    <h2>contact us</h2>
+    <div class="contact-icons">
+        <a href="#" target="_blank" class="icon telegram">
+            <!-- Telegram -->
+            <svg viewBox="0 0 24 24">
+                <path d="M9.04 15.47l-.39 5.48c.56 0 .8-.24 1.09-.53l2.62-2.5 5.43 3.98c1 .55 1.7.26 1.95-.92l3.54-16.6h0c.3-1.4-.5-1.95-1.48-1.6L1.67 9.37C.3 9.9.32 10.7 1.44 11.05l5.4 1.69L19.89 4.7c.63-.38 1.2-.17.73.21"/>
+            </svg>
+        </a>
 
+        <a href="#" target="_blank" class="icon tiktok">
+            <!-- TikTok -->
+            <svg viewBox="0 0 24 24">
+                <path d="M16.6 5.82a4.78 4.78 0 01-3.2-1.21V14.5a4.5 4.5 0 11-4.5-4.5c.3 0 .6.03.88.09v2.27a2.25 2.25 0 102.25 2.25V2h2.37a4.78 4.78 0 002.7 3.82z"/>
+            </svg>
+        </a>
+
+        <a href="#" target="_blank" class="icon tumblr">
+            <!-- Tumblr -->
+            <svg viewBox="0 0 24 24">
+                <path d="M14.3 21c-3.2 0-4.6-2.2-4.6-4.1V9H7V6.3c2.2-.8 3.1-2.8 3.3-4.3h2.4V6h3.3v3h-3.3v7.4c0 .9.5 1.4 1.3 1.4.6 0 1.2-.2 1.6-.4v2.7c-.6.4-1.7.9-3.3.9z"/>
+            </svg>
+        </a>
+    </div>
+</div>
     <footer>© 2026 wasteoffc</footer>
 
 </div>
