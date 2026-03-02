@@ -11,7 +11,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
 
 body {
-    min-height: 100vh;
+    height: 100vh;
     color: white;
     overflow-x: hidden;
     position: relative;
@@ -27,12 +27,12 @@ body::before {
     z-index: -2;
 }
 
-/* затемнение */
+/* Затемнение */
 body::after {
     content: "";
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
     z-index: -1;
 }
 
@@ -53,18 +53,17 @@ body::after {
     text-align: center;
     color: #4da6ff;
     font-family: 'Orbitron', sans-serif;
-    padding: 20px;
 }
 
-.warning-box h1 { font-size: 32px; min-height: 40px; }
-.warning-box p { color: #aaa; min-height: 24px; margin-top: 10px; }
+.warning-box h1 { font-size: 36px; min-height: 45px; }
+.warning-box p { color: #aaa; min-height: 25px; margin-top: 10px; }
 
 #hackBtn {
     margin-top: 25px;
     background: #4da6ff;
     border: none;
     padding: 12px 30px;
-    font-size: 16px;
+    font-size: 18px;
     color: white;
     border-radius: 10px;
     cursor: pointer;
@@ -85,8 +84,8 @@ body::after {
 }
 
 #hackProgressContainer {
-    width: 250px;
-    height: 8px;
+    width: 300px;
+    height: 10px;
     background: #111;
     margin: 20px auto 10px;
     border-radius: 10px;
@@ -116,17 +115,17 @@ body::after {
 
 .container {
     max-width: 900px;
-    margin: 60px auto;
+    margin: 80px auto;
     padding: 20px;
     text-align: center;
 }
 
-/* 🔥 ФИКС ДЛЯ ГИФОК */
+/* 🔥 ФИКС ГИФОК */
 .title-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 25px;
     flex-wrap: nowrap;
 }
 
@@ -198,15 +197,216 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 /* 📱 MOBILE FIX */
 @media (max-width: 600px) {
 
-    .side-gif { width: 35px; }
+    .side-gif {
+        width: 35px;
+    }
 
-    h1 { font-size: 32px; }
+    h1 {
+        font-size: 32px;
+    }
 
-    .title-wrapper { gap: 10px; }
+    .title-wrapper {
+        gap: 10px;
+    }
 
-    #hackProgressContainer { width: 200px; }
+    #hackProgressContainer {
+        width: 220px;
+    }
 }
 </style>
 </head>
 
 <body>
+
+<!-- WARNING -->
+<div id="warning">
+    <div class="warning-box">
+        <h1 id="typeTitle"></h1>
+        <p id="typeSubtitle"></p>
+
+        <div id="hackProgressContainer">
+            <div id="hackProgressBar"></div>
+        </div>
+        <p id="hackPercent"></p>
+
+        <button id="hackBtn">взлом</button>
+    </div>
+</div>
+
+<!-- САЙТ -->
+<div id="siteContent">
+<div class="container">
+
+    <div class="title-wrapper">
+        <img src="https://image2url.com/r2/default/gifs/1772468297460-6593ee6e-0d37-44d1-a4c9-2ebc5eecf898.gif" class="side-gif">
+        <h1>wasteoffc</h1>
+        <img src="https://image2url.com/r2/default/gifs/1772468297460-6593ee6e-0d37-44d1-a4c9-2ebc5eecf898.gif" class="side-gif">
+    </div>
+
+    <p class="subtitle">
+        hehim > theythem sx6sp4sp9 choleric
+    </p>
+
+    <div class="section">
+        <h2>luv list &lt;3</h2>
+        <ul>
+            <li>Konch I lv u sm</li>
+            <li>Korffius , Leon , Terenty , Korka</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>my fandoms</h2>
+        <ul>
+            <li>BASEketball , Genshin impact , Honkai Star Rail , Hunter x Hunter , Jujutsu Kaisen , Chainsaw man , Hazbin hotel , Helluva boss , Heavy rain , Mouthwashing , Papers please , Night in the woods , No I'm not a human , Mortal Kombat , Alien stage , Countryhumans , FNaF , Twitch , RuRave , Evangelion , Milk inside a bag of milk , Suicide boy , Beastars , Everything but your life , Blue period , Devil may cry , Cookie run games , Brawl stars , Homestuck , Slow damage , The Summer Hikaru dead , A room without windows , Watajel , Se trata de Nada , South Park , Kamisama kiss , Fight club , American psycho , Metal Family , Дух моей общаги , Regretevator , Ryan Gosling's films , Scott Pilgrim , Mob psycho 100 , Chiikawa , Cats warriors , Eurovision , I love Amy , One wheat mark , Spooky month , Toilet-bound Hanako-kun , The promise of hope n etc</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>kinn list</h2>
+        <ul>
+            <li>Killua , Chrollo , Norman jayden , Kyle Broflovski , Mae Borowski , Nero , Vicho , Jimmy , Vox , Husk , Lucifer , Blitz , Scaramouche , Skirk , Blade , Luka , Narrator , Song gi tae , Ayanami Rei , Антон Звездочкин , Towa , Tomoe , Yoshiki , Samuel</li>
+        </ul>
+    </div>
+
+    <div class="player">
+        <button class="play-btn" id="playBtn">▶ Play</button>
+        <div class="progress-container" id="progressContainer">
+            <div class="progress" id="progress"></div>
+        </div>
+    </div>
+
+    <footer>© 2026 wasteoffc</footer>
+
+</div>
+</div>
+
+<!-- ЗВУКИ -->
+<audio id="hackSound">
+    <source src="hack-sound.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="audio" loop>
+    <source src="nezhnoe-elektrichestvo.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const titleText = "менеджер VOXTEK";
+const subText = "информация засекречена";
+
+const typeTitle = document.getElementById("typeTitle");
+const typeSubtitle = document.getElementById("typeSubtitle");
+const hackBtn = document.getElementById("hackBtn");
+const warning = document.getElementById("warning");
+const siteContent = document.getElementById("siteContent");
+const hackSound = document.getElementById("hackSound");
+
+const hackProgressContainer = document.getElementById("hackProgressContainer");
+const hackProgressBar = document.getElementById("hackProgressBar");
+const hackPercent = document.getElementById("hackPercent");
+
+let i = 0;
+let j = 0;
+
+function typeTitleEffect() {
+    if (i < titleText.length) {
+        typeTitle.textContent += titleText.charAt(i);
+        i++;
+        setTimeout(typeTitleEffect, 80);
+    } else {
+        setTimeout(typeSubtitleEffect, 500);
+    }
+}
+
+function typeSubtitleEffect() {
+    if (j < subText.length) {
+        typeSubtitle.textContent += subText.charAt(j);
+        j++;
+        setTimeout(typeSubtitleEffect, 50);
+    } else {
+        hackBtn.style.display = "inline-block";
+    }
+}
+
+typeTitleEffect();
+
+hackBtn.addEventListener("click", () => {
+
+    hackSound.play();
+    hackBtn.style.display = "none";
+    typeSubtitle.textContent = "выполняется взлом...";
+    warning.classList.add("glitch");
+
+    hackProgressContainer.style.display = "block";
+    hackPercent.style.display = "block";
+
+    let progressValue = 0;
+
+    function randomProgress() {
+        if (progressValue < 100) {
+
+            let step = Math.floor(Math.random() * 7) + 1;
+            if (Math.random() < 0.15) step = 0;
+
+            progressValue += step;
+            if (progressValue > 100) progressValue = 100;
+
+            hackProgressBar.style.width = progressValue + "%";
+            hackPercent.textContent = progressValue + "%";
+
+            let speed = Math.floor(Math.random() * 250) + 50;
+            setTimeout(randomProgress, speed);
+
+        } else {
+
+            typeSubtitle.textContent = "доступ получен";
+            warning.classList.remove("glitch");
+
+            setTimeout(() => {
+                warning.style.opacity = "0";
+                siteContent.style.filter = "blur(0)";
+            }, 1000);
+
+            setTimeout(() => {
+                warning.style.display = "none";
+            }, 2000);
+        }
+    }
+
+    randomProgress();
+});
+
+/* ПЛЕЕР */
+
+const audio = document.getElementById("audio");
+const playBtn = document.getElementById("playBtn");
+const progress = document.getElementById("progress");
+const progressContainer = document.getElementById("progressContainer");
+
+audio.volume = 0.7;
+
+playBtn.addEventListener("click", () => {
+    if (audio.paused) {
+        audio.play();
+        playBtn.textContent = "▐▐ Pause";
+    } else {
+        audio.pause();
+        playBtn.textContent = "▶ Play";
+    }
+});
+
+audio.addEventListener("timeupdate", () => {
+    const percent = (audio.currentTime / audio.duration) * 100;
+    progress.style.width = percent + "%";
+});
+
+progressContainer.addEventListener("click", (e) => {
+    const width = progressContainer.clientWidth;
+    const clickX = e.offsetX;
+    const duration = audio.duration;
+    audio.currentTime = (clickX / width) * duration;
+});
+</script>
+
+</body>
+    </html>
