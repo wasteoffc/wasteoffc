@@ -15,7 +15,7 @@ body {
     position: relative;
 }
 
-/* НОВЫЙ GIF фон */
+/* GIF фон */
 body::before {
     content: "";
     position: fixed;
@@ -28,7 +28,7 @@ body::before {
     z-index: -2;
 }
 
-/* Затемнение чтобы текст читался */
+/* Затемнение */
 body::after {
     content: "";
     position: fixed;
@@ -47,7 +47,32 @@ body::after {
     text-align: center;
 }
 
-h1 { font-size: 48px; margin-bottom: 10px; }
+/* === НОВЫЙ БЛОК ЗАГОЛОВКА === */
+
+.title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.side-gif {
+    width: 70px;
+    height: auto;
+}
+
+h1 { 
+    font-size: 48px; 
+}
+
+@media (max-width: 600px) {
+    .side-gif {
+        width: 40px;
+    }
+}
+
+/* ============================ */
+
 .subtitle { color: #aaa; margin-bottom: 40px; }
 
 .section {
@@ -107,7 +132,14 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 <body>
 
 <div class="container">
-    <h1>wasteoffc</h1>
+
+    <!-- Заголовок с гифками -->
+    <div class="title-wrapper">
+        <img src="https://image2url.com/r2/default/gifs/1772468297460-6593ee6e-0d37-44d1-a4c9-2ebc5eecf898.gif" class="side-gif" alt="gif">
+        <h1>wasteoffc</h1>
+        <img src="https://image2url.com/r2/default/gifs/1772468297460-6593ee6e-0d37-44d1-a4c9-2ebc5eecf898.gif" class="side-gif" alt="gif">
+    </div>
+
     <p class="subtitle">
         hehim > theythem sx6sp4sp9 choleric
     </p>
