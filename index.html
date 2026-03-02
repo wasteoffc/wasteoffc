@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>wasteoffc</title>
 
-<!-- Новый шрифт -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
 
 <style>
@@ -22,10 +21,7 @@ body {
 body::before {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background: url("https://image2url.com/r2/default/gifs/1772462807420-13ff4131-2f4d-471d-9efa-159f2f09606b.gif") no-repeat center center;
     background-size: cover;
     z-index: -2;
@@ -35,12 +31,86 @@ body::before {
 body::after {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background: rgba(0, 0, 0, 0.6);
     z-index: -1;
+}
+
+/* ===== WARNING SCREEN ===== */
+
+#warning {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 1s ease;
+}
+
+.warning-box {
+    text-align: center;
+    color: #4da6ff;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.warning-box h1 { font-size: 36px; min-height: 45px; }
+.warning-box p { color: #aaa; min-height: 25px; margin-top: 10px; }
+
+#hackBtn {
+    margin-top: 25px;
+    background: #4da6ff;
+    border: none;
+    padding: 12px 30px;
+    font-size: 18px;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: none;
+}
+
+#hackBtn:hover { transform: scale(1.1); }
+
+.glitch { animation: glitch 0.15s infinite; }
+
+@keyframes glitch {
+    0% { transform: translate(2px, -2px); }
+    25% { transform: translate(-2px, 2px); }
+    50% { transform: translate(2px, 2px); }
+    75% { transform: translate(-2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+#hackProgressContainer {
+    width: 300px;
+    height: 10px;
+    background: #111;
+    margin: 20px auto 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #4da6ff;
+    display: none;
+}
+
+#hackProgressBar {
+    height: 100%;
+    width: 0%;
+    background: #4da6ff;
+}
+
+#hackPercent {
+    color: #4da6ff;
+    font-size: 14px;
+    display: none;
+}
+
+/* ===== САЙТ ===== */
+
+#siteContent {
+    filter: blur(12px);
+    transition: filter 1s ease;
 }
 
 .container {
@@ -49,8 +119,6 @@ body::after {
     padding: 20px;
     text-align: center;
 }
-
-/* === ЗАГОЛОВОК === */
 
 .title-wrapper {
     display: flex;
@@ -61,47 +129,12 @@ body::after {
 
 .side-gif {
     width: 70px;
-    height: auto;
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
-    animation: glowPulse 2.5s ease-in-out infinite;
-    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.7));
 }
 
-.side-gif:hover {
-    transform: scale(1.1);
-}
+h1 { font-family: 'Orbitron', sans-serif; font-size: 52px; }
 
-@keyframes glowPulse {
-    0% {
-        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
-    }
-    50% {
-        filter: drop-shadow(0 0 18px rgba(255, 255, 255, 1));
-    }
-    100% {
-        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
-    }
-}
-
-h1 { 
-    font-family: 'Orbitron', sans-serif;
-    font-size: 52px;
-    letter-spacing: 3px;
-}
-
-@media (max-width: 600px) {
-    .side-gif {
-        width: 40px;
-    }
-
-    h1 {
-        font-size: 34px;
-    }
-}
-
-/* ============================ */
-
-.subtitle { color: #aaa; margin-bottom: 40px; }
+.subtitle { color: #aaa; margin-bottom: 15px; }
 
 .section {
     background: rgba(255,255,255,0.05);
@@ -159,146 +192,35 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 
 <body>
 
+<!-- WARNING -->
+<div id="warning">
+    <div class="warning-box">
+        <h1 id="typeTitle"></h1>
+        <p id="typeSubtitle"></p>
+
+        <div id="hackProgressContainer">
+            <div id="hackProgressBar"></div>
+        </div>
+        <p id="hackPercent"></p>
+
+        <button id="hackBtn">взлом</button>
+    </div>
+</div>
+
+<!-- САЙТ -->
+<div id="siteContent">
+
 <div class="container">
 
     <div class="title-wrapper">
-        <img src="https://image2url.com/r2/default/gifs/1772468297460-6593ee6e-0d37-44d1-a4c9-2ebc5eecf898.gif" class="side-gif" alt="gif">
+        <img src="https://image2url.com/r2/default/gifs/1772468297460-6593ee6e-0d37-44d1-a4c9-2ebc5eecf898.gif" class="side-gif">
         <h1>wasteoffc</h1>
-        <img src="https://image2url.com/r2/default/gifs/1772468297460-6593ee6e-0d37-44d1-a4c9-2ebc5eecf898.gif" class="side-gif" alt="gif">
+        <img src="https://image2url.com/r2/default/gifs/1772468297460-6593ee6e-0d37-44d1-a4c9-2ebc5eecf898.gif" class="side-gif">
     </div>
 
     <p class="subtitle">
         hehim > theythem sx6sp4sp9 choleric
     </p>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-
-body {
-    height: 100vh;
-    color: white;
-    overflow-x: hidden;
-    position: relative;
-}
-
-/* GIF фон */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url("https://image2url.com/r2/default/gifs/1772462807420-13ff4131-2f4d-471d-9efa-159f2f09606b.gif") no-repeat center center;
-    background-size: cover;
-    z-index: -2;
-}
-
-/* Затемнение */
-body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: -1;
-}
-
-.container {
-    max-width: 900px;
-    margin: 80px auto;
-    padding: 20px;
-    text-align: center;
-}
-
-/* === НОВЫЙ БЛОК ЗАГОЛОВКА === */
-
-.title-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-}
-
-.side-gif {
-    width: 70px;
-    height: auto;
-}
-
-h1 { 
-    font-size: 48px; 
-}
-
-@media (max-width: 600px) {
-    .side-gif {
-        width: 40px;
-    }
-}
-
-/* ============================ */
-
-.subtitle { color: #aaa; margin-bottom: 40px; }
-
-.section {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 15px;
-    transition: 0.3s;
-}
-
-.section:hover {
-    transform: scale(1.03);
-    background: rgba(255,255,255,0.1);
-}
-
-.section h2 { margin-bottom: 15px; color: #4da6ff; }
-
-ul { list-style: none; }
-li { margin: 8px 0; color: #ddd; }
-
-.player {
-    margin-top: 30px;
-    padding: 15px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 15px;
-}
-
-.play-btn {
-    background: #4da6ff;
-    border: none;
-    padding: 10px 20px;
-    color: white;
-    font-size: 16px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.progress-container {
-    margin-top: 15px;
-    background: #333;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.progress {
-    height: 8px;
-    width: 0%;
-    background: #4da6ff;
-    border-radius: 10px;
-}
-
-footer { margin-top: 40px; font-size: 14px; color: #ccc; }
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-    <!-- Заголовок с гифками -->
 
     <div class="section">
         <h2>luv list &lt;3</h2>
@@ -330,13 +252,109 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
     </div>
 
     <footer>© 2026 wasteoffc</footer>
+
 </div>
+</div>
+
+<!-- ЗВУКИ -->
+<audio id="hackSound">
+    <source src="hack-sound.mp3" type="audio/mpeg">
+</audio>
 
 <audio id="audio" loop>
     <source src="nezhnoe-elektrichestvo.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+/* ===== ХАК ЭКРАН ===== */
+
+const titleText = "менеджер VOXTEK";
+const subText = "информация засекречена";
+
+const typeTitle = document.getElementById("typeTitle");
+const typeSubtitle = document.getElementById("typeSubtitle");
+const hackBtn = document.getElementById("hackBtn");
+const warning = document.getElementById("warning");
+const siteContent = document.getElementById("siteContent");
+const hackSound = document.getElementById("hackSound");
+
+const hackProgressContainer = document.getElementById("hackProgressContainer");
+const hackProgressBar = document.getElementById("hackProgressBar");
+const hackPercent = document.getElementById("hackPercent");
+
+let i = 0;
+let j = 0;
+
+function typeTitleEffect() {
+    if (i < titleText.length) {
+        typeTitle.textContent += titleText.charAt(i);
+        i++;
+        setTimeout(typeTitleEffect, 80);
+    } else {
+        setTimeout(typeSubtitleEffect, 500);
+    }
+}
+
+function typeSubtitleEffect() {
+    if (j < subText.length) {
+        typeSubtitle.textContent += subText.charAt(j);
+        j++;
+        setTimeout(typeSubtitleEffect, 50);
+    } else {
+        hackBtn.style.display = "inline-block";
+    }
+}
+
+typeTitleEffect();
+
+hackBtn.addEventListener("click", () => {
+
+    hackSound.play();
+    hackBtn.style.display = "none";
+    typeSubtitle.textContent = "выполняется взлом...";
+    warning.classList.add("glitch");
+
+    hackProgressContainer.style.display = "block";
+    hackPercent.style.display = "block";
+
+    let progressValue = 0;
+
+    function randomProgress() {
+        if (progressValue < 100) {
+
+            let step = Math.floor(Math.random() * 7) + 1;
+            if (Math.random() < 0.15) step = 0;
+
+            progressValue += step;
+            if (progressValue > 100) progressValue = 100;
+
+            hackProgressBar.style.width = progressValue + "%";
+            hackPercent.textContent = progressValue + "%";
+
+            let speed = Math.floor(Math.random() * 250) + 50;
+            setTimeout(randomProgress, speed);
+
+        } else {
+
+            typeSubtitle.textContent = "доступ получен";
+            warning.classList.remove("glitch");
+
+            setTimeout(() => {
+                warning.style.opacity = "0";
+                siteContent.style.filter = "blur(0)";
+            }, 1000);
+
+            setTimeout(() => {
+                warning.style.display = "none";
+            }, 2000);
+        }
+    }
+
+    randomProgress();
+});
+
+/* ===== ПЛЕЕР ===== */
+
 const audio = document.getElementById("audio");
 const playBtn = document.getElementById("playBtn");
 const progress = document.getElementById("progress");
@@ -366,10 +384,6 @@ progressContainer.addEventListener("click", (e) => {
     audio.currentTime = (clickX / width) * duration;
 });
 </script>
-
-</body>
-</html>
-</div>
 
 </body>
 </html>
