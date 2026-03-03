@@ -8,7 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
 
 <style>
-    /* ===== LEVEL 10 EASTER EGG ===== */
+
+/* ===== LEVEL 10 EASTER EGG ===== */
 
 #voidOverlay {
     position: fixed;
@@ -64,44 +65,13 @@
     80% { transform: translate(1px, 1px); }
     100% { transform: translate(0); }
 }
-    .contact-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
-.contact-section h2 {
-    color: white;
-    opacity: 0.8;
-    font-size: 22px;
-    margin-bottom: 10px;
-    letter-spacing: 2px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
-
-.contact-icons {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-}
-
-.icon {
-    width: 40px;
-    height: 40px;
-    opacity: 0.5;
-    transition: 0.3s ease;
-}
-
-.icon svg {
-    fill: white;
-    width: 100%;
-    height: 100%;
-}
-
-.icon:hover {
-    opacity: 1;
-    transform: scale(1.15);
-}
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
 
 body {
     height: 100vh;
@@ -213,7 +183,6 @@ body::after {
     text-align: center;
 }
 
-/* 🔥 ФИКС ГИФОК */
 .title-wrapper {
     display: flex;
     align-items: center;
@@ -254,57 +223,59 @@ h1 {
 ul { list-style: none; }
 li { margin: 8px 0; color: #ddd; }
 
-/* ===== DECAY PROGRESS ===== */
-
-footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 footer {
     margin-top: 40px;
+    font-size: 14px;
+    color: #ccc;
 }
-/* 📱 MOBILE FIX */
+
+/* ===== MUSIC PLAYER ===== */
+
+.music-player {
+    margin: 40px auto;
+    max-width: 400px;
+}
+
+.controls button {
+    background: #111;
+    border: 1px solid #4da6ff;
+    color: #4da6ff;
+    padding: 8px 12px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #111;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background: #4da6ff;
+}
+
+.time {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
 @media (max-width: 600px) {
-
-    .side-gif {
-        width: 35px;
-    }
-
-    h1 {
-        font-size: 32px;
-    }
-
-    .title-wrapper {
-        gap: 10px;
-    }
-
-    #hackProgressContainer {
-        width: 220px;
-    }
+    .side-gif { width: 35px; }
+    h1 { font-size: 32px; }
+    .title-wrapper { gap: 10px; }
+    #hackProgressContainer { width: 220px; }
 }
+
 </style>
 </head>
 
 <body>
-<div class="music-player">
-    <div class="player-info">
-        <div class="cover"></div>
-        <div class="time">
-            <span id="current">0:00</span>
-            <span id="duration">0:00</span>
-        </div>
-    </div>
 
-    <div class="controls">
-        <button id="prev">⏮</button>
-        <button id="play">▶</button>
-        <button id="next">⏭</button>
-    </div>
-
-    <div class="progress-bar">
-        <div class="progress" id="progress"></div>
-    </div>
-
-    <audio id="audio" src="nezhnoe-elektrichestvo.mp3"></audio>
-</div>
-<!-- WARNING -->
 <div id="warning">
     <div class="warning-box">
         <h1 id="typeTitle"></h1>
@@ -319,104 +290,66 @@ footer {
     </div>
 </div>
 
-<!-- САЙТ -->
 <div id="siteContent">
 <div class="container">
 
-    <div class="title-wrapper">
-        <img src="Tumblr_l_216030659304047.gif" class="side-gif">
-        <h1>wasteoffc</h1>
-        <img src="Tumblr_l_216030659304047.gif" class="side-gif">
-    </div>
-
-    <p class="subtitle">
-        hehim > theythem sx6sp4sp9 choleric
-    </p>
-
-    <div class="section">
-        <h2>luv list &lt;3</h2>
-        <ul>
-            <li>Konch I lv u sm</li>
-            <li>Korffius , Leon , Terenty , Korka</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>my fandoms</h2>
-        <ul>
-            <li>BASEketball , Genshin impact , Honkai Star Rail , Hunter x Hunter , Jujutsu Kaisen , Chainsaw man , Hazbin hotel , Helluva boss , Heavy rain , Mouthwashing , Papers please , Night in the woods , No I'm not a human , Mortal Kombat , Alien stage , Countryhumans , FNaF , Twitch , RuRave , Evangelion , Milk inside a bag of milk , Suicide boy , Beastars , Everything but your life , Blue period , Devil may cry , Cookie run games , Brawl stars , Homestuck , Slow damage , The Summer Hikaru dead , A room without windows , Watajel , Se trata de Nada , South Park , Kamisama kiss , Fight club , American psycho , Metal Family , Дух моей общаги , Regretevator , Ryan Gosling's films , Scott Pilgrim , Mob psycho 100 , Chiikawa , Cats warriors , Eurovision , I love Amy , One wheat mark , Spooky month , Toilet-bound Hanako-kun , The promise of hope n etc</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>kinn list</h2>
-        <ul>
-            <li>Killua , Chrollo , Norman jayden , Kyle Broflovski , Mae Borowski , Nero , Vicho , Jimmy , Vox , Husk , Lucifer , Blitz , Scaramouche , Skirk , Blade , Luka , Narrator , Song gi tae , Ayanami Rei , Антон Звездочкин , Towa , Tomoe , Yoshiki , Samuel</li>
-        </ul>
-    </div>
-
-    <div class="music-player">
-    <div class="player-info">
-        <div class="cover"></div>
-        <div class="time">
-            <span id="current">0:00</span>
-            <span id="duration">0:00</span>
-        </div>
-    </div>
-
-    <div class="controls">
-        <button id="prev">⏮</button>
-        <button id="play">▶</button>
-        <button id="next">⏭</button>
-    </div>
-
-    <div class="progress-bar">
-        <div class="progress" id="progress"></div>
-    </div>
-
-    <audio id="audio" src="nezhnoe-elektrichestvo.mp3"></audio>
-    </div>
-<div class="contact-section">
-
-    <h2>contact us</h2>
-    <div class="contact-icons">
-        <a href="https://t.me/irlwhittman" target="_blank" class="icon telegram">
-            <!-- Telegram -->
-            <svg viewBox="0 0 24 24">
-                <path d="M9.04 15.47l-.39 5.48c.56 0 .8-.24 1.09-.53l2.62-2.5 5.43 3.98c1 .55 1.7.26 1.95-.92l3.54-16.6h0c.3-1.4-.5-1.95-1.48-1.6L1.67 9.37C.3 9.9.32 10.7 1.44 11.05l5.4 1.69L19.89 4.7c.63-.38 1.2-.17.73.21"/>
-            </svg>
-        </a>
-
-        <a href="https://www.tiktok.com/@nnervozz?_r=1&_t=ZS-94ManHL37RJ" target="_blank" class="icon tiktok">
-            <!-- TikTok -->
-            <svg viewBox="0 0 24 24">
-  <path d="M21 8.5a7.6 7.6 0 01-4.4-1.4v6.3a5.9 5.9 0 11-5.9-5.9c.3 0 .6 0 .9.1v3a3 3 0 103 3V2h3a7.6 7.6 0 002.4 4.5z"/>
-            </svg>
-        </a>
-
-        <a href="https://www.tumblr.com/wasteoffc?source=share" target="_blank" class="icon tumblr">
-            <!-- Tumblr -->
-            <svg viewBox="0 0 24 24">
-                <path d="M14.3 21c-3.2 0-4.6-2.2-4.6-4.1V9H7V6.3c2.2-.8 3.1-2.8 3.3-4.3h2.4V6h3.3v3h-3.3v7.4c0 .9.5 1.4 1.3 1.4.6 0 1.2-.2 1.6-.4v2.7c-.6.4-1.7.9-3.3.9z"/>
-            </svg>
-        </a>
-    </div>
+<div class="title-wrapper">
+<img src="Tumblr_l_216030659304047.gif" class="side-gif">
+<h1>wasteoffc</h1>
+<img src="Tumblr_l_216030659304047.gif" class="side-gif">
 </div>
-    <footer>© 2026 wasteoffc</footer>
+
+<p class="subtitle">
+hehim > theythem sx6sp4sp9 choleric
+</p>
+
+<div class="section">
+<h2>luv list &lt;3</h2>
+<ul>
+<li>Konch I lv u sm</li>
+<li>Korffius , Leon , Terenty , Korka</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>my fandoms</h2>
+<ul>
+<li>BASEketball , Genshin impact , Honkai Star Rail , Hunter x Hunter , Jujutsu Kaisen , Chainsaw man , Hazbin hotel , Helluva boss , Heavy rain , Mouthwashing , Papers please , Night in the woods , No I'm not a human , Mortal Kombat , Alien stage , Countryhumans , FNaF , Twitch , RuRave , Evangelion , Milk inside a bag of milk , Suicide boy , Beastars , Everything but your life , Blue period , Devil may cry , Cookie run games , Brawl stars , Homestuck , Slow damage , The Summer Hikaru dead , A room without windows , Watajel , Se trata de Nada , South Park , Kamisama kiss , Fight club , American psycho , Metal Family , Дух моей общаги , Regretevator , Ryan Gosling's films , Scott Pilgrim , Mob psycho 100 , Chiikawa , Cats warriors , Eurovision , I love Amy , One wheat mark , Spooky month , Toilet-bound Hanako-kun , The promise of hope n etc</li>
+</ul>
+</div>
+
+<div class="music-player">
+<div class="controls">
+<button id="prev">⏮</button>
+<button id="play">▶</button>
+<button id="next">⏭</button>
+</div>
+
+<div class="progress-bar">
+<div class="progress" id="progress"></div>
+</div>
+
+<div class="time">
+<span id="current">0:00</span> /
+<span id="duration">0:00</span>
+</div>
+
+<audio id="audio" src="nezhnoe-elektrichestvo.mp3"></audio>
+</div>
+
+<footer>© 2026 wasteoffc</footer>
 
 </div>
 </div>
 
-<!-- ЗВУКИ -->
 <audio id="hackSound">
-    <source src="hack-sound.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="audio" loop>
-    <source src="nezhnoe-elektrichestvo.mp3" type="audio/mpeg">
+<source src="hack-sound.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+
+/* ===== HACK SCREEN ===== */
+
 const titleText = "manager VOXTEK";
 const subText = "The information is classified";
 
@@ -501,6 +434,7 @@ hackBtn.addEventListener("click", () => {
 
     randomProgress();
 });
+
 /* ===== VOID PROTOCOL ===== */
 
 const footer = document.querySelector("footer");
@@ -524,7 +458,6 @@ function activateVoid() {
     overlay.innerHTML = `<div id="voidText"></div>`;
     document.body.appendChild(overlay);
 
-    // шум через Web Audio (без файла)
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const bufferSize = audioCtx.sampleRate * 0.4;
     const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
@@ -572,11 +505,10 @@ function activateVoid() {
     setTimeout(() => {
         overlay.remove();
     }, 5000);
-    }
-/* ПЛЕЕР */
-    
-<script>
-    alert("JS работает");
+}
+
+/* ===== PLAYER ===== */
+
 const audio = document.getElementById("audio");
 const playBtn = document.getElementById("play");
 const progress = document.getElementById("progress");
@@ -586,7 +518,6 @@ const durationEl = document.getElementById("duration");
 
 audio.volume = 0.7;
 
-// ▶ / ⏸
 playBtn.addEventListener("click", () => {
     if (audio.paused) {
         audio.play();
@@ -597,29 +528,24 @@ playBtn.addEventListener("click", () => {
     }
 });
 
-// Обновление времени и прогресса
 audio.addEventListener("timeupdate", () => {
     if (audio.duration) {
         const percent = (audio.currentTime / audio.duration) * 100;
         progress.style.width = percent + "%";
-
         currentTimeEl.textContent = formatTime(audio.currentTime);
     }
 });
 
-// Когда трек загрузился
 audio.addEventListener("loadedmetadata", () => {
     durationEl.textContent = formatTime(audio.duration);
 });
 
-// Перемотка по клику
 progressBar.addEventListener("click", (e) => {
     const width = progressBar.clientWidth;
     const clickX = e.offsetX;
     audio.currentTime = (clickX / width) * audio.duration;
 });
 
-// Формат времени 0:00
 function formatTime(time) {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60)
@@ -627,7 +553,8 @@ function formatTime(time) {
         .padStart(2, "0");
     return minutes + ":" + seconds;
 }
+
 </script>
 
 </body>
-    </html>
+</html>
