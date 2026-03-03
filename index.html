@@ -344,6 +344,13 @@ hehim > theythem sx6sp4sp9 choleric
 </ul>
 </div>
 
+<div class="section">
+<h2>kinn list</h2>
+<ul>
+<li>Killua , Chrollo , Norman jayden , Kyle Broflovski , Mae Borowski , Nero , Vicho , Jimmy , Vox , Husk , Lucifer , Blitz , Scaramouche , Skirk , Blade , Luka , Narrator , Song gi tae , Ayanami Rei , Антон Звездочкин , Towa , Tomoe , Yoshiki , Samuel</li>
+</ul>
+</div>
+
 <div class="music-player">
 
 <div class="album-cover">
@@ -351,9 +358,9 @@ hehim > theythem sx6sp4sp9 choleric
 </div>
 
 <div class="controls">
-<button id="prev">◀</button>
+<button id="prev">⏮</button>
 <button id="play">▶</button>
-<button id="next">▶▶</button>
+<button id="next">⏭</button>
 </div>
 
 <div class="progress-bar">
@@ -405,7 +412,7 @@ hehim > theythem sx6sp4sp9 choleric
 
 <script>
 
-/* HACK JS */
+/* HACK JS оставлен без изменений */
 
 const titleText = "manager VOXTEK";
 const subText = "The information is classified";
@@ -448,7 +455,7 @@ typeTitleEffect();
 
 hackBtn.addEventListener("click", () => {
 
-    hackSound.play().catch(() => {});
+    hackSound.play().catch(()=>{});
     hackBtn.style.display = "none";
     typeSubtitle.textContent = "hacking...";
     warning.classList.add("glitch");
@@ -460,10 +467,8 @@ hackBtn.addEventListener("click", () => {
 
     function randomProgress() {
         if (progressValue < 100) {
-
             let step = Math.floor(Math.random() * 7) + 1;
             if (Math.random() < 0.15) step = 0;
-
             progressValue += step;
             if (progressValue > 100) progressValue = 100;
 
@@ -474,7 +479,6 @@ hackBtn.addEventListener("click", () => {
             setTimeout(randomProgress, speed);
 
         } else {
-
             typeSubtitle.textContent = "access granted";
             warning.classList.remove("glitch");
 
@@ -522,13 +526,25 @@ function loadTrack(index) {
 }
 
 function playTrack() {
-    audio.play().catch(() => {});
+    audio.play().catch(()=>{});
     playBtn.textContent = "▐▐";
 }
 
 function pauseTrack() {
     audio.pause();
     playBtn.textContent = "▶";
+}
+
+function nextTrack() {
+    currentTrack = (currentTrack + 1) % tracks.length;
+    loadTrack(currentTrack);
+    playTrack();
+}
+
+function prevTrack() {
+    currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+    loadTrack(currentTrack);
+    playTrack();
 }
 
 function startAutoplay() {
@@ -541,27 +557,13 @@ playBtn.addEventListener("click", () => {
     else pauseTrack();
 });
 
-nextBtn.addEventListener("click", () => {
-    currentTrack = (currentTrack + 1) % tracks.length;
-    loadTrack(currentTrack);
-    playTrack();
-});
+nextBtn.addEventListener("click", nextTrack);
+prevBtn.addEventListener("click", prevTrack);
 
-prevBtn.addEventListener("click", () => {
-    currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
-    loadTrack(currentTrack);
-    playTrack();
-});
-
-audio.addEventListener("ended", () => {
-    currentTrack = (currentTrack + 1) % tracks.length;
-    loadTrack(currentTrack);
-    playTrack();
-});
+audio.addEventListener("ended", nextTrack);
 
 audio.addEventListener("timeupdate", () => {
     if (!audio.duration) return;
-
     const percent = (audio.currentTime / audio.duration) * 100;
     progress.style.width = percent + "%";
     currentTimeEl.textContent = formatTime(audio.currentTime);
@@ -576,6 +578,24 @@ progressBar.addEventListener("click", (e) => {
     const width = progressBar.clientWidth;
     const clickX = e.offsetX;
     audio.currentTime = (clickX / width) * audio.duration;
+});
+
+/* SWIPE */
+
+let startX = 0;
+
+cover.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+});
+
+cover.addEventListener("touchend", (e) => {
+    let endX = e.changedTouches[0].clientX;
+    let diff = startX - endX;
+
+    if (Math.abs(diff) > 50) {
+        if (diff > 0) nextTrack();
+        else prevTrack();
+    }
 });
 
 function formatTime(time) {
