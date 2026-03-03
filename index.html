@@ -608,21 +608,6 @@ progressBar.addEventListener("click", (e) => {
     audio.currentTime = (clickX / width) * audio.duration;
 });
     
-// Обновление прогресс-бара
-audio.addEventListener("timeupdate", () => {
-    if (audio.duration) {
-        const percent = (audio.currentTime / audio.duration) * 100;
-        progress.style.width = percent + "%";
-    }
-});
-
-// Перемотка по клику
-progressBar.addEventListener("click", (e) => {
-    const width = progressBar.clientWidth;
-    const clickX = e.offsetX;
-    audio.currentTime = (clickX / width) * audio.duration;
-});
-    
 </script>
 
 </body>
