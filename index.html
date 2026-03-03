@@ -250,7 +250,31 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 
 /* PLAYER */
 
-.music-player { margin: 40px auto; max-width: 400px; }
+.music-player { margin: 40px auto; max-width: 400px; text-align:center; }
+
+.album-cover {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 15px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(77,166,255,0.4);
+}
+
+.album-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rotate {
+    animation: spin 6s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
 
 .controls button {
     background: #111;
@@ -328,17 +352,28 @@ hehim > theythem sx6sp4sp9 choleric
 </div>
 
 <div class="music-player">
-<div class="controls">
-<button id="play">▶</button>
+
+<div class="album-cover">
+<img id="cover" src="cover1.jpg">
 </div>
+
+<div class="controls">
+<button id="prev">◀</button>
+<button id="play">▶</button>
+<button id="next">▶▶</button>
+</div>
+
 <div class="progress-bar">
 <div class="progress" id="progress"></div>
 </div>
+
 <div class="time">
 <span id="current">0:00</span> /
 <span id="duration">0:00</span>
 </div>
-<audio id="audio" src="nezhnoe-elektrichestvo.mp3"></audio>
+
+<audio id="audio"></audio>
+
 </div>
 
 <div class="contact-section">
@@ -353,7 +388,7 @@ hehim > theythem sx6sp4sp9 choleric
 
 <a href="https://www.tiktok.com/@nnervozz" target="_blank" class="icon">
 <svg viewBox="0 0 24 24">
-<path d="M21 8.5a7.6 7.6 0 01-4.4-1.4v6.3a5.9 5.9 0 11-5.9-5.9c.3 0 .6 0 .9.1v3a3 3 0 103 3V2h3a7.6 7.6 0 002.4 4.5z"/>
+<path d="M21 8.5a7.6 7.6 0 01-4.4-1.4v6.3a5.9 5.9 11-5.9-5.9c.3 0 .6 0 .9.1v3a3 3 103 3V2h3a7.6 7.6 002.4 4.5z"/>
 </svg>
 </a>
 
@@ -377,7 +412,7 @@ hehim > theythem sx6sp4sp9 choleric
 
 <script>
 
-/* HACK + VOID + PLAYER JS (тот же, полностью рабочий) */
+/* HACK JS (не тронут) */
 
 const titleText = "manager VOXTEK";
 const subText = "The information is classified";
@@ -453,6 +488,7 @@ hackBtn.addEventListener("click", () => {
             setTimeout(() => {
                 warning.style.opacity = "0";
                 siteContent.style.filter = "blur(0)";
+                startAutoplay();
             }, 1000);
 
             setTimeout(() => {
@@ -466,23 +502,69 @@ hackBtn.addEventListener("click", () => {
 
 /* PLAYER */
 
+const tracks = [
+    { src: "track1.mp3", cover: "cover1.jpg" },
+    { src: "track2.mp3", cover: "cover2.jpg" },
+    { src: "track3.mp3", cover: "cover3.jpg" }
+];
+
+let currentTrack = 0;
+
 const audio = document.getElementById("audio");
 const playBtn = document.getElementById("play");
+const nextBtn = document.getElementById("next");
+const prevBtn = document.getElementById("prev");
 const progress = document.getElementById("progress");
 const progressBar = document.querySelector(".progress-bar");
 const currentTimeEl = document.getElementById("current");
 const durationEl = document.getElementById("duration");
+const cover = document.getElementById("cover");
 
 audio.volume = 0.7;
 
+function loadTrack(index) {
+    audio.src = tracks[index].src;
+    cover.src = tracks[index].cover;
+}
+
+function playTrack() {
+    audio.play();
+    playBtn.textContent = "▐▐";
+    cover.classList.add("rotate");
+}
+
+function pauseTrack() {
+    audio.pause();
+    playBtn.textContent = "▶";
+    cover.classList.remove("rotate");
+}
+
+function startAutoplay() {
+    loadTrack(currentTrack);
+    playTrack();
+}
+
 playBtn.addEventListener("click", () => {
-    if (audio.paused) {
-        audio.play();
-        playBtn.textContent = "▐▐";
-    } else {
-        audio.pause();
-        playBtn.textContent = "▶";
-    }
+    if (audio.paused) playTrack();
+    else pauseTrack();
+});
+
+nextBtn.addEventListener("click", () => {
+    currentTrack = (currentTrack + 1) % tracks.length;
+    loadTrack(currentTrack);
+    playTrack();
+});
+
+prevBtn.addEventListener("click", () => {
+    currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+    loadTrack(currentTrack);
+    playTrack();
+});
+
+audio.addEventListener("ended", () => {
+    currentTrack = (currentTrack + 1) % tracks.length;
+    loadTrack(currentTrack);
+    playTrack();
 });
 
 audio.addEventListener("timeupdate", () => {
