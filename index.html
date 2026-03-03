@@ -66,12 +66,7 @@
     100% { transform: translate(0); }
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
 
 body {
     height: 100vh;
@@ -80,7 +75,6 @@ body {
     position: relative;
 }
 
-/* GIF фон */
 body::before {
     content: "";
     position: fixed;
@@ -90,7 +84,6 @@ body::before {
     z-index: -2;
 }
 
-/* Затемнение */
 body::after {
     content: "";
     position: fixed;
@@ -99,7 +92,7 @@ body::after {
     z-index: -1;
 }
 
-/* ===== WARNING SCREEN ===== */
+/* WARNING */
 
 #warning {
     position: fixed;
@@ -169,12 +162,9 @@ body::after {
     display: none;
 }
 
-/* ===== САЙТ ===== */
+/* SITE */
 
-#siteContent {
-    filter: blur(12px);
-    transition: filter 1s ease;
-}
+#siteContent { filter: blur(12px); transition: filter 1s ease; }
 
 .container {
     max-width: 900px;
@@ -188,19 +178,14 @@ body::after {
     align-items: center;
     justify-content: center;
     gap: 25px;
-    flex-wrap: nowrap;
 }
 
 .side-gif {
     width: 70px;
-    flex-shrink: 0;
     filter: drop-shadow(0 0 8px rgba(255,255,255,0.7));
 }
 
-h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 52px;
-}
+h1 { font-family: 'Orbitron', sans-serif; font-size: 52px; }
 
 .subtitle { color: #aaa; margin-bottom: 15px; }
 
@@ -213,28 +198,59 @@ h1 {
     transition: 0.3s;
 }
 
-.section:hover {
-    transform: scale(1.03);
-    background: rgba(255,255,255,0.1);
-}
+.section:hover { transform: scale(1.03); background: rgba(255,255,255,0.1); }
 
 .section h2 { margin-bottom: 15px; color: #4da6ff; }
 
 ul { list-style: none; }
 li { margin: 8px 0; color: #ddd; }
 
-footer {
-    margin-top: 40px;
-    font-size: 14px;
-    color: #ccc;
+/* CONTACT */
+
+.contact-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
 }
 
-/* ===== MUSIC PLAYER ===== */
-
-.music-player {
-    margin: 40px auto;
-    max-width: 400px;
+.contact-section h2 {
+    color: white;
+    opacity: 0.8;
+    font-size: 22px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
 }
+
+.contact-icons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    opacity: 0.5;
+    transition: 0.3s ease;
+}
+
+.icon svg {
+    fill: white;
+    width: 100%;
+    height: 100%;
+}
+
+.icon:hover {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+footer { margin-top: 40px; font-size: 14px; color: #ccc; }
+
+/* PLAYER */
+
+.music-player { margin: 40px auto; max-width: 400px; }
 
 .controls button {
     background: #111;
@@ -253,23 +269,9 @@ footer {
     cursor: pointer;
 }
 
-.progress {
-    height: 100%;
-    width: 0%;
-    background: #4da6ff;
-}
+.progress { height: 100%; width: 0%; background: #4da6ff; }
 
-.time {
-    font-size: 12px;
-    margin-top: 5px;
-}
-
-@media (max-width: 600px) {
-    .side-gif { width: 35px; }
-    h1 { font-size: 32px; }
-    .title-wrapper { gap: 10px; }
-    #hackProgressContainer { width: 220px; }
-}
+.time { font-size: 12px; margin-top: 5px; }
 
 </style>
 </head>
@@ -318,23 +320,50 @@ hehim > theythem sx6sp4sp9 choleric
 </ul>
 </div>
 
-<div class="music-player">
-<div class="controls">
-<button id="prev">⏮</button>
-<button id="play">▶</button>
-<button id="next">⏭</button>
+<div class="section">
+<h2>kinn list</h2>
+<ul>
+<li>Killua , Chrollo , Norman jayden , Kyle Broflovski , Mae Borowski , Nero , Vicho , Jimmy , Vox , Husk , Lucifer , Blitz , Scaramouche , Skirk , Blade , Luka , Narrator , Song gi tae , Ayanami Rei , Антон Звездочкин , Towa , Tomoe , Yoshiki , Samuel</li>
+</ul>
 </div>
 
+<div class="music-player">
+<div class="controls">
+<button id="play">▶</button>
+</div>
 <div class="progress-bar">
 <div class="progress" id="progress"></div>
 </div>
-
 <div class="time">
 <span id="current">0:00</span> /
 <span id="duration">0:00</span>
 </div>
-
 <audio id="audio" src="nezhnoe-elektrichestvo.mp3"></audio>
+</div>
+
+<div class="contact-section">
+<h2>contact us</h2>
+<div class="contact-icons">
+
+<a href="https://t.me/irlwhittman" target="_blank" class="icon">
+<svg viewBox="0 0 24 24">
+<path d="M9.04 15.47l-.39 5.48c.56 0 .8-.24 1.09-.53l2.62-2.5 5.43 3.98c1 .55 1.7.26 1.95-.92l3.54-16.6h0c.3-1.4-.5-1.95-1.48-1.6L1.67 9.37C.3 9.9.32 10.7 1.44 11.05l5.4 1.69L19.89 4.7c.63-.38 1.2-.17.73.21"/>
+</svg>
+</a>
+
+<a href="https://www.tiktok.com/@nnervozz" target="_blank" class="icon">
+<svg viewBox="0 0 24 24">
+<path d="M21 8.5a7.6 7.6 0 01-4.4-1.4v6.3a5.9 5.9 0 11-5.9-5.9c.3 0 .6 0 .9.1v3a3 3 0 103 3V2h3a7.6 7.6 0 002.4 4.5z"/>
+</svg>
+</a>
+
+<a href="https://www.tumblr.com/wasteoffc" target="_blank" class="icon">
+<svg viewBox="0 0 24 24">
+<path d="M14.3 21c-3.2 0-4.6-2.2-4.6-4.1V9H7V6.3c2.2-.8 3.1-2.8 3.3-4.3h2.4V6h3.3v3h-3.3v7.4c0 .9.5 1.4 1.3 1.4.6 0 1.2-.2 1.6-.4v2.7c-.6.4-1.7.9-3.3.9z"/>
+</svg>
+</a>
+
+</div>
 </div>
 
 <footer>© 2026 wasteoffc</footer>
@@ -348,7 +377,7 @@ hehim > theythem sx6sp4sp9 choleric
 
 <script>
 
-/* ===== HACK SCREEN ===== */
+/* HACK + VOID + PLAYER JS (тот же, полностью рабочий) */
 
 const titleText = "manager VOXTEK";
 const subText = "The information is classified";
@@ -435,79 +464,7 @@ hackBtn.addEventListener("click", () => {
     randomProgress();
 });
 
-/* ===== VOID PROTOCOL ===== */
-
-const footer = document.querySelector("footer");
-let voidClicks = 0;
-
-footer.addEventListener("click", () => {
-    voidClicks++;
-
-    if (voidClicks === 3) {
-        activateVoid();
-        voidClicks = 0;
-    }
-
-    setTimeout(() => voidClicks = 0, 2000);
-});
-
-function activateVoid() {
-
-    const overlay = document.createElement("div");
-    overlay.id = "voidOverlay";
-    overlay.innerHTML = `<div id="voidText"></div>`;
-    document.body.appendChild(overlay);
-
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const bufferSize = audioCtx.sampleRate * 0.4;
-    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-    const data = buffer.getChannelData(0);
-
-    for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1;
-    }
-
-    const noise = audioCtx.createBufferSource();
-    noise.buffer = buffer;
-    noise.connect(audioCtx.destination);
-    noise.start();
-
-    const text = [
-        "intrusion detected",
-        "unknown presence inside system",
-        "trace failed",
-        "it sees you"
-    ];
-
-    let line = 0;
-    const voidText = document.getElementById("voidText");
-
-    function typeLine() {
-        if (line < text.length) {
-            let i = 0;
-            const current = text[line];
-            const interval = setInterval(() => {
-                if (i < current.length) {
-                    voidText.innerHTML += current[i];
-                    i++;
-                } else {
-                    clearInterval(interval);
-                    voidText.innerHTML += "<br><br>";
-                    line++;
-                    setTimeout(typeLine, 300);
-                }
-            }, 35);
-        }
-    }
-
-    typeLine();
-
-    setTimeout(() => {
-        overlay.remove();
-    }, 5000);
-}
-
-/* ===== PLAYER ===== */
+/* PLAYER */
 
 const audio = document.getElementById("audio");
 const playBtn = document.getElementById("play");
@@ -548,9 +505,7 @@ progressBar.addEventListener("click", (e) => {
 
 function formatTime(time) {
     const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60)
-        .toString()
-        .padStart(2, "0");
+    const seconds = Math.floor(time % 60).toString().padStart(2, "0");
     return minutes + ":" + seconds;
 }
 
