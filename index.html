@@ -254,28 +254,6 @@ h1 {
 ul { list-style: none; }
 li { margin: 8px 0; color: #ddd; }
 
-<div class="music-player">
-    <div class="player-info">
-        <div class="cover"></div>
-        <div class="time">
-            <span id="current">0:00</span>
-            <span id="duration">0:00</span>
-        </div>
-    </div>
-
-    <div class="controls">
-        <button id="prev">⏮</button>
-        <button id="play">▶</button>
-        <button id="next">⏭</button>
-    </div>
-
-    <div class="progress-bar">
-        <div class="progress" id="progress"></div>
-    </div>
-
-    <audio id="audio" src="nezhnoe-elektrichestvo.mp3"></audio>
-</div>
-
 /* ===== DECAY PROGRESS ===== */
 
 footer { margin-top: 40px; font-size: 14px; color: #ccc; }
@@ -305,7 +283,27 @@ footer {
 </head>
 
 <body>
+<div class="music-player">
+    <div class="player-info">
+        <div class="cover"></div>
+        <div class="time">
+            <span id="current">0:00</span>
+            <span id="duration">0:00</span>
+        </div>
+    </div>
 
+    <div class="controls">
+        <button id="prev">⏮</button>
+        <button id="play">▶</button>
+        <button id="next">⏭</button>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <audio id="audio" src="nezhnoe-elektrichestvo.mp3"></audio>
+</div>
 <!-- WARNING -->
 <div id="warning">
     <div class="warning-box">
