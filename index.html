@@ -576,15 +576,18 @@ function activateVoid() {
     }, 5000);
     }
 /* ПЛЕЕР */
-
+    
 <script>
 const audio = document.getElementById("audio");
 const playBtn = document.getElementById("play");
 const progress = document.getElementById("progress");
 const progressBar = document.querySelector(".progress-bar");
+const currentTimeEl = document.getElementById("current");
+const durationEl = document.getElementById("duration");
 
 audio.volume = 0.7;
 
+// ▶ / ⏸
 playBtn.addEventListener("click", () => {
     if (audio.paused) {
         audio.play();
@@ -595,19 +598,36 @@ playBtn.addEventListener("click", () => {
     }
 });
 
+// Обновление времени и прогресса
 audio.addEventListener("timeupdate", () => {
     if (audio.duration) {
         const percent = (audio.currentTime / audio.duration) * 100;
         progress.style.width = percent + "%";
+
+        currentTimeEl.textContent = formatTime(audio.currentTime);
     }
 });
 
+// Когда трек загрузился
+audio.addEventListener("loadedmetadata", () => {
+    durationEl.textContent = formatTime(audio.duration);
+});
+
+// Перемотка по клику
 progressBar.addEventListener("click", (e) => {
     const width = progressBar.clientWidth;
     const clickX = e.offsetX;
     audio.currentTime = (clickX / width) * audio.duration;
 });
-    
+
+// Формат времени 0:00
+function formatTime(time) {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60)
+        .toString()
+        .padStart(2, "0");
+    return minutes + ":" + seconds;
+}
 </script>
 
 </body>
