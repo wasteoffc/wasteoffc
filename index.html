@@ -482,6 +482,19 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 .interactive-block:active {
     transform: scale(0.98);
 }
+    /* ===== RETURN MESSAGE ===== */
+
+.return-message {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #aaa;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.return-message.show {
+    opacity: 1;
+}
 </style>
 </head>
 
@@ -499,16 +512,20 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 
         <button id="hackBtn">hack</button>
     </div>
-</div>
+
+    <div id="returnMessage" class="return-message"></div>
+    </div>
 
 <div id="siteContent">
-<div class="container">
 
-<div class="title-wrapper">
-<img src="Tumblr_l_216030659304047.gif" class="side-gif">
-<h1>wasteoffc</h1>
-<img src="Tumblr_l_216030659304047.gif" class="side-gif">
-</div>
+    <!-- ОСНОВНОЙ САЙТ -->
+    <div class="container">
+
+        <div class="title-wrapper">
+            <img src="Tumblr_l_216030659304047.gif" class="side-gif">
+            <h1>wasteoffc</h1>
+            <img src="Tumblr_l_216030659304047.gif" class="side-gif">
+        </div>
 
 <p class="subtitle">
 hehim > theythem sx6sp4sp9 choleric
@@ -600,8 +617,27 @@ hehim > theythem sx6sp4sp9 choleric
 
 </div>
 </div>
+        
+        </div> <!-- container -->
 
-<footer>© 2026 wasteoffc</footer>
+    <!-- ПРАВАЯ FIXED КОЛОНКА -->
+    <div class="ads-column">
+        <div class="ad-banner">
+            <img src="ad1.jpg" alt="ad">
+        </div>
+
+        <div class="ad-banner">
+            <img src="ad2.jpg" alt="ad">
+        </div>
+
+        <div class="ad-banner">
+            <img src="ad3.jpg" alt="ad">
+        </div>
+    </div>
+
+    <footer>© 2026 wasteoffc</footer>
+
+</div> <!-- siteContent -->
 
 </div>
 </div>
@@ -857,6 +893,49 @@ const observer = new IntersectionObserver((entries) => {
 sections.forEach(section => {
     observer.observe(section);
 });
+
+// ===== EVOLUTION MEMORY SYSTEM (FIXED) =====
+
+const returnMessage = document.getElementById("returnMessage");
+const hackBtnMemory = document.getElementById("hackBtn");
+
+let visits = localStorage.getItem("visits");
+
+if (!visits) {
+    visits = 1;
+} else {
+    visits = parseInt(visits) + 1;
+}
+
+localStorage.setItem("visits", visits);
+
+// показываем welcome back со 2 захода
+if (visits >= 2) {
+    setTimeout(() => {
+        returnMessage.textContent = "welcome back.";
+        returnMessage.classList.add("show");
+    }, 2000);
+}
+
+// эволюция кнопки
+if (visits === 1) {
+    hackBtnMemory.textContent = "hack";
+}
+else if (visits === 2) {
+    hackBtnMemory.textContent = "continue";
+}
+else if (visits === 3) {
+    hackBtnMemory.textContent = "access granted";
+}
+else if (visits === 4) {
+    hackBtnMemory.textContent = "you again?";
+}
+else if (visits === 5) {
+    hackBtnMemory.textContent = "we remember you";
+}
+else if (visits >= 6) {
+    hackBtnMemory.textContent = "enter";
+}
 </script>
 
 </body>
