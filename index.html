@@ -250,16 +250,32 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 
 /* PLAYER */
 
+
 .music-player {
-    margin: 40px 0;
+    margin: 40px auto;
     max-width: 500px;
     display: flex;
     align-items: center;
     gap: 20px;
     text-align: left;
 }
-    .player-right {
+
+.player-right {
     flex: 1;
+}
+
+/* центрирование контейнера для ПК и телефона */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* адаптив */
+@media (max-width: 600px) {
+    .music-player {
+        flex-direction: row; 
+    }
 }
 
 /* ===== WHITE GLASS BUTTONS ===== */
