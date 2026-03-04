@@ -500,6 +500,29 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 .return-message.show {
     opacity: 1;
 }
+
+.section {
+    position: relative;
+    transition: all 0.4s ease;
+    border-radius: 16px;
+}
+
+/* Белое неоновое свечение */
+.section:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 0 12px rgba(255,255,255,0.25),
+        0 0 25px rgba(255,255,255,0.2),
+        0 0 50px rgba(255,255,255,0.15);
+}
+
+/* Лёгкий эффект нажатия */
+.section:active {
+    transform: translateY(-2px);
+    box-shadow:
+        0 0 8px rgba(255,255,255,0.3),
+        0 0 15px rgba(255,255,255,0.2);
+}
 </style>
 </head>
 
@@ -819,10 +842,18 @@ playBtn.addEventListener("click", () => {
     else pauseTrack();
 });
 
-nextBtn.addEventListener("click", nextTrack);
-prevBtn.addEventListener("click", prevTrack);
-
-audio.addEventListener("ended", nextTrack);
+nextBtn.addEventListener("click", () => {
+    let newIndex = (currentTrack + 1) % tracks.length;
+    smoothChangeTrack(newIndex);
+});
+prevBtn.addEventListener("click", () => {
+    let newIndex = (currentTrack - 1 + tracks.length) % tracks.length;
+    smoothChangeTrack(newIndex);
+});
+audio.addEventListener("ended", () => {
+    let newIndex = (currentTrack + 1) % tracks.length;
+    smoothChangeTrack(newIndex);
+});
 
 audio.addEventListener("timeupdate", () => {
     if (!audio.duration) return;
@@ -923,6 +954,41 @@ else if (visits === 5) {
 }
 else if (visits >= 6) {
     hackBtnMemory.textContent = "enter";
+}
+    function smoothChangeTrack(newIndex) {
+    const fadeDuration = 500; // длительность затухания (мс)
+    const fadeSteps = 20;
+    const stepTime = fadeDuration / fadeSteps;
+    let currentVolume = audio.volume;
+
+    // Fade OUT
+    let fadeOut = setInterval(() => {
+        if (audio.volume > 0.05) {
+            audio.volume -= currentVolume / fadeSteps;
+        } else {
+            clearInterval(fadeOut);
+
+            audio.pause();
+            audio.currentTime = 0;
+
+            // Меняем трек
+            currentTrack = newIndex;
+            loadTrack(currentTrack); // твоя функция загрузки трека
+
+            audio.volume = 0;
+            audio.play();
+
+            // Fade IN
+            let fadeIn = setInterval(() => {
+                if (audio.volume < currentVolume) {
+                    audio.volume += currentVolume / fadeSteps;
+                } else {
+                    audio.volume = currentVolume;
+                    clearInterval(fadeIn);
+                }
+            }, stepTime);
+        }
+    }, stepTime);
 }
 </script>
 
