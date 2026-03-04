@@ -204,6 +204,7 @@ h1 { font-family: 'Orbitron', sans-serif; font-size: 52px; }
 
 ul { list-style: none; }
 li { margin: 8px 0; color: #ddd; }
+    
 
 /* CONTACT */
 
@@ -418,6 +419,20 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
             0 0 20px rgba(255,255,255,0.3),
             0 0 40px rgba(255,255,255,0.2);
     }
+}
+    /* ===== SOFT REVEAL EFFECT ===== */
+
+.section {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(8px);
+    transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
+}
+
+.section.show {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
 }
 </style>
 </head>
@@ -770,7 +785,23 @@ vinyl.addEventListener("touchend", (e) => {
     const seconds = Math.floor(time % 60).toString().padStart(2, "0");
     return minutes + ":" + seconds;
 }
+/* ===== REVEAL ON SCROLL ===== */
 
+const sections = document.querySelectorAll(".section");
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        }
+    });
+}, {
+    threshold: 0.15
+});
+
+sections.forEach(section => {
+    observer.observe(section);
+});
 </script>
 
 </body>
