@@ -250,7 +250,17 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 
 /* PLAYER */
 
-.music-player { margin: 40px auto; max-width: 400px; text-align:center; }
+.music-player {
+    margin: 40px 0;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-align: left;
+}
+    .player-right {
+    flex: 1;
+}
 
 /* ===== WHITE GLASS BUTTONS ===== */
 
@@ -261,24 +271,16 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 }
 
 .controls button {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.5);
+    background: none;
+    border: none;
     color: white;
-    font-size: 18px;
-    backdrop-filter: blur(10px);
+    font-size: 22px;
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: 0.25s ease;
 }
 
-.controls button:hover {
-    background: rgba(255,255,255,0.15);
-    box-shadow:
-        0 0 15px rgba(255,255,255,0.7),
-        0 0 30px rgba(255,255,255,0.4);
-    transform: scale(1.1);
+.controls button:active {
+    transform: scale(0.9);
 }
 
 .controls button:active {
@@ -301,7 +303,7 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 .vinyl-wrapper {
     width: 120px;
     height: 120px;
-    margin: 0 auto 15px;
+    flex-shrink: 0;
 }
 
 .vinyl {
@@ -464,20 +466,24 @@ hehim > theythem sx6sp4sp9 choleric
         </div>
     </div>
 </div>
+
+<div class="player-right">
     
-<div class="controls">
-<button id="prev">⏮</button>
-<button id="play">▶</button>
-<button id="next">⏭</button>
-</div>
+    <div class="controls">
+        <button id="prev">⏮</button>
+        <button id="play">▶</button>
+        <button id="next">⏭</button>
+    </div>
 
-<div class="progress-bar">
-<div class="progress" id="progress"></div>
-</div>
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
 
-<div class="time">
-<span id="current">0:00</span> /
-<span id="duration">0:00</span>
+    <div class="time">
+        <span id="current">0:00</span> /
+        <span id="duration">0:00</span>
+    </div>
+
 </div>
 
 <audio id="audio"></audio>
