@@ -523,6 +523,52 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
         0 0 8px rgba(255,255,255,0.3),
         0 0 15px rgba(255,255,255,0.2);
 }
+    .title-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+.side-gif{
+    width: 60px;
+    height: auto;
+}
+    .title-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+.side-gif{
+    width: 60px;
+    height: auto;
+}
+/* ===== MOBILE TITLE FIX ===== */
+
+@media (max-width: 600px){
+
+.title-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.title-wrapper h1{
+    font-size: 28px;
+    white-space: nowrap;
+}
+
+.side-gif{
+    width: 32px;
+    flex-shrink: 0;
+}
+
+}
 </style>
 </head>
 
