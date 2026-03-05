@@ -567,6 +567,19 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
     width: 32px;
     flex-shrink: 0;
 }
+    #vox{
+position:fixed;
+bottom:20px;
+left:200px;
+
+width:110px;
+
+z-index:99999;
+pointer-events:auto;
+cursor:pointer;
+
+transition:transform 0.2s linear;
+}
 
 }
 </style>
@@ -1036,7 +1049,117 @@ else if (visits >= 6) {
         }
     }, stepTime);
 }
-</script>
+const vox = document.getElementById("vox");
 
+let x = Math.random() * window.innerWidth;
+let direction = Math.random() > 0.5 ? 1 : -1;
+
+let sleeping = false;
+
+const walkFrames = [
+"shime1.png",
+"shime2.png",
+"shime3.png",
+"shime4.png"
+];
+
+const sleepFrame = "shime6.png";
+
+let frame = 0;
+
+/* появление из края */
+
+function spawnFromEdge(){
+
+if(Math.random() > 0.5){
+x = -120;
+direction = 1;
+vox.style.transform = "scaleX(1)";
+}else{
+x = window.innerWidth + 120;
+direction = -1;
+vox.style.transform = "scaleX(-1)";
+}
+
+}
+
+spawnFromEdge();
+
+/* движение */
+
+function animate(){
+
+if(sleeping) return;
+
+frame++;
+
+if(frame >= walkFrames.length){
+frame = 0;
+}
+
+vox.src = walkFrames[frame];
+
+x += direction * 1.5;
+
+if(x < -120 || x > window.innerWidth + 120){
+spawnFromEdge();
+}
+
+vox.style.left = x + "px";
+
+}
+
+setInterval(animate,200);
+
+/* случайный сон */
+
+function randomSleep(){
+
+if(Math.random() < 0.3 && !sleeping){
+
+sleeping = true;
+
+vox.src = sleepFrame;
+
+setTimeout(()=>{
+
+sleeping = false;
+
+},4000);
+
+}
+
+}
+
+setInterval(randomSleep,8000);
+
+/* реакция на музыку */
+
+audio.addEventListener("play",()=>{
+
+vox.src = "shime10.png";
+
+});
+
+audio.addEventListener("pause",()=>{
+
+vox.src = "shime1.png";
+
+});
+
+/* клик */
+
+vox.addEventListener("click",()=>{
+
+vox.src = "shimeblush.png";
+
+setTimeout(()=>{
+vox.src = "shime1.png";
+},1500);
+
+});
+        
+</script>
+  <img id="vox" src="shime1.png">
 </body>
 </html>
