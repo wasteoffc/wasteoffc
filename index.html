@@ -546,8 +546,34 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 .side-gif{
     width: 60px;
     height: auto;
+
 }
-/* ===== MOBILE TITLE FIX ===== */
+/* обычный стиль */
+
+#vox{
+position: fixed;
+bottom:20px;
+left:200px;
+width:110px;
+z-index:99999;
+pointer-events:auto;
+cursor:pointer;
+transition:transform 0.2s linear;
+}
+
+
+/* мобильный фикс */
+
+@media (max-width:600px){
+
+#vox{
+width:80px;
+left:20px;
+bottom:10px;
+}
+
+}
+    /* ===== MOBILE TITLE FIX ===== */
 
 @media (max-width: 600px){
 
@@ -567,22 +593,7 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
     width: 32px;
     flex-shrink: 0;
 
-}
-    /* ===== VOX SHIMEJI ===== */
-
-#vox{
-position:fixed;
-bottom:20px;
-left:200px;
-
-width:110px;
-
-z-index:99999;
-pointer-events:auto;
-cursor:pointer;
-
-transition:transform 0.2s linear;
-}
+  }
     }
     
 </style>
@@ -1056,10 +1067,11 @@ else if (visits >= 6) {
 }
         
 window.addEventListener("DOMContentLoaded", () => {
+    });
 
 const vox = document.getElementById("vox");
 
-let x = Math.random() * window.innerWidth;
+let x = Math.random() * (window.innerWidth - 120);
 let direction = Math.random() > 0.5 ? 1 : -1;
 
 let sleeping = false;
@@ -1162,9 +1174,74 @@ vox.addEventListener("click",()=>{
 vox.src = "shime38.png";
 
 setTimeout(()=>{
-vox.src = "shime43.png";
+vox.src ="shime43.png";
 },1500);
     });
+ 
+/* ===== DRAG VOX ===== */
+
+let isDragging = false;
+let offsetX = 0;
+let offsetY = 0;
+
+vox.addEventListener("mousedown", (e)=>{
+
+isDragging = true;
+
+offsetX = e.clientX - vox.offsetLeft;
+offsetY = e.clientY - vox.offsetTop;
+
+vox.src = "vox_grab.png"; // спрайт когда хватаешь
+
+});
+
+    document.addEventListener("mousemove", (e)=>{
+
+if(isDragging){
+
+vox.style.left = e.pageX + "px";
+vox.style.top = e.pageY + "px";
+
+checkBlocks(); // ВОТ ЭТА СТРОКА
+
+}
+});
+
+document.addEventListener("mouseup",()=>{
+
+if(!isDragging) return;
+
+isDragging = false;
+
+vox.src = "vox_idle.png"; // обычный спрайт
+
+});
+    function checkBlocks(){
+
+const voxRect = vox.getBoundingClientRect();
+const blocks = document.querySelectorAll(".section");
+
+blocks.forEach(block => {
+
+const blockRect = block.getBoundingClientRect();
+
+const voxBottom = voxRect.bottom;
+const blockTop = blockRect.top;
+
+if(
+voxRect.right > blockRect.left &&
+voxRect.left < blockRect.right &&
+voxBottom >= blockTop &&
+voxBottom <= blockTop + 20
+){
+
+vox.style.top = (blockRect.top - 100) + "px";
+
+vox.src = "vox_sit.png"; // спрайт сидения
+
+}
+
+});
 
 });
         
