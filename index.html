@@ -1078,15 +1078,10 @@ const vox = document.getElementById("vox");
 
 let x = Math.random() * (window.innerWidth - 120);
 let direction = Math.random() > 0.5 ? 1 : -1;
-
+    
+setState("walk");
+    
 let sleeping = false;
-
-const walkFrames = [
-"shime1.png",
-"shime2.png",
-"shime3.png",
-"shime2.png"
-];
 
 const sleepFrame = "shime21.png";
 
@@ -1119,13 +1114,9 @@ function animate(){
 if(sleeping) return;
     if(isDragging) return;
 
-frame++;
-
-if(frame >= walkFrames.length){
-frame = 0;
+if(state !== "walk"){
+setState("walk");
 }
-
-vox.src = walkFrames[frame];
 
 x += direction * 0.6;
     vox.style.transform = "scaleX(" + direction + ")";
@@ -1152,7 +1143,18 @@ if(Math.random() < 0.3 && !sleeping){
 
 sleeping = true;
 
-vox.src = sleepFrame;
+setState("sleep");
+
+setTimeout(()=>{
+
+sleeping = false;
+setState("walk");
+
+},4000);
+
+}
+
+}
 
 setTimeout(()=>{
 
@@ -1207,6 +1209,7 @@ offsetX = e.clientX - rect.left;
 offsetY = e.clientY - rect.top;
 
 vox.src = "shime5.png";
+    setState("drag");
 
 });
 
@@ -1214,8 +1217,14 @@ vox.src = "shime5.png";
 
 if(isDragging){
 
-vox.style.left = (e.clientX - offsetX) + "px";
-vox.style.top = (e.clientY - offsetY) + "px";
+let newX = e.clientX - offsetX;
+let newY = e.clientY - offsetY;
+
+newX = Math.max(0, Math.min(window.innerWidth - vox.offsetWidth, newX));
+newY = Math.max(0, Math.min(window.innerHeight - vox.offsetHeight, newY));
+
+vox.style.left = newX + "px";
+vox.style.top = newY + "px";
 vox.style.bottom = "auto";
     let wobble = Math.sin(Date.now()*0.01) * 5;
 
@@ -1257,8 +1266,14 @@ if(!isDragging) return;
 
 const touch = e.touches[0];
 
-vox.style.left = (touch.clientX - offsetX) + "px";
-vox.style.top = (touch.clientY - offsetY) + "px";
+let newX = touch.clientX - offsetX;
+let newY = touch.clientY - offsetY;
+
+newX = Math.max(0, Math.min(window.innerWidth - vox.offsetWidth, newX));
+newY = Math.max(0, Math.min(window.innerHeight - vox.offsetHeight, newY));
+
+vox.style.left = newX + "px";
+vox.style.top = newY + "px";
 vox.style.bottom = "auto";
     let wobble = Math.sin(Date.now()*0.01) * 5;
 
@@ -1298,28 +1313,123 @@ vox.src = "shime15.png";
 });
 
 }
-    function climbBlocks(){
 
-const voxRect = vox.getBoundingClientRect();
-const blocks = document.querySelectorAll(".section");
+function walkRandom(){
 
-blocks.forEach(block => {
+const maxX = window.innerWidth - vox.offsetWidth;
+const maxY = window.innerHeight - vox.offsetHeight;
 
-const blockRect = block.getBoundingClientRect();
+let x = Math.random() * maxX;
+let y = Math.random() * maxY;
 
-if(
-voxRect.right > blockRect.left &&
-voxRect.left < blockRect.right &&
-voxRect.bottom > blockRect.top - 20 &&
-voxRect.bottom < blockRect.top + 20
-){
-
-vox.style.top = (blockRect.top + window.scrollY - 100) + "px";
-vox.src = "shime15.png";
+vox.style.transition = "all 2s linear";
+vox.style.left = x + "px";
+vox.style.top = y + "px";
 
 }
 
-});
+setInterval(walkRandom, 7000);
+
+    function sitOnBlock(){
+
+const blocks = document.querySelectorAll(".section");
+
+if(blocks.length === 0) return;
+
+let block = blocks[Math.floor(Math.random()*blocks.length)];
+
+let rect = block.getBoundingClientRect();
+
+let x = rect.left + rect.width/2 - vox.offsetWidth/2;
+let y = rect.top - vox.offsetHeight;
+
+vox.style.transition = "all 2s ease";
+vox.style.left = x + "px";
+vox.style.top = y + "px";
+        setInterval(()=>{
+
+if(Math.random() < 0.4){
+sitOnBlock();
+}else{
+walkRandom();
+}
+
+},8000);
+
+}
+    const sprites = {
+
+idle: [
+"shime1.png",
+"shime39.png"
+],
+
+walk: [
+"shime2.png",
+"shime3.png",
+"shime2.png",
+"shime3.png"
+],
+
+sleep: [
+"shime21.png",
+"shime21.png"
+],
+
+climb: [
+"shime12.png",
+"shime13.png"
+],
+
+fall: [
+"shime4.png"
+]
+
+};
+
+let state = "idle";
+let animation;
+    function setState(newState){
+
+if(state === newState) return;
+
+state = newState;
+frame = 0;
+
+clearInterval(animation);
+
+animation = setInterval(()=>{
+
+const frames = sprites[state];
+
+vox.src = frames[frame];
+
+frame++;
+
+if(frame >= frames.length){
+frame = 0;
+}
+
+},200);
+        if(direction < 0){
+vox.style.transform = "scaleX(-1)";
+}else{
+vox.style.transform = "scaleX(1)";
+            function walkRandom(){
+
+if(isDragging || sleeping) return;
+
+const maxX = window.innerWidth - vox.offsetWidth;
+const maxY = window.innerHeight - vox.offsetHeight;
+
+let x = Math.random() * maxX;
+let y = Math.random() * maxY;
+
+vox.style.transition = "all 2s linear";
+vox.style.left = x + "px";
+vox.style.top = y + "px";
+
+}
 
 }
         
