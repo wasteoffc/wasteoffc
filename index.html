@@ -1096,14 +1096,16 @@ let frame = 0;
 
 function spawnFromEdge(){
 
+vox.style.position = "fixed";
+
 if(Math.random() > 0.5){
 x = -120;
 direction = 1;
-vox.style.transform = "scaleX(1) translateZ(0)";
+vox.style.transform = "scaleX(1)";
 }else{
 x = window.innerWidth + 120;
 direction = -1;
-vox.style.transform = "scaleX(-1) translateZ(0)";
+vox.style.transform = "scaleX(-1)";
 }
 
 }
@@ -1126,13 +1128,18 @@ frame = 0;
 vox.src = walkFrames[frame];
 
 x += direction * 0.6;
+    vox.style.transform = "scaleX(" + direction + ")";
 
-if(x < -120 || x > window.innerWidth + 120){
-spawnFromEdge();
+if(x < -120){
+direction = 1;
+}
+
+if(x > window.innerWidth - 120){
+direction = -1;
 }
 
 vox.style.left = x + "px";
-
+checkBlocks();
 }
 
 setInterval(animate,60);
@@ -1212,9 +1219,9 @@ vox.style.top = (e.clientY - offsetY) + "px";
 vox.style.bottom = "auto";
     let wobble = Math.sin(Date.now()*0.01) * 5;
 
-vox.style.transform = "rotate(" + wobble + "deg)";
+vox.style.transform = "scaleX(" + direction + ") rotate(" + wobble + "deg)";
 
-vox.src = "shime7.png";\
+vox.src = "shime7.png";
     
 checkBlocks(); // ВОТ ЭТА СТРОКА
     
@@ -1255,7 +1262,7 @@ vox.style.top = (touch.clientY - offsetY) + "px";
 vox.style.bottom = "auto";
     let wobble = Math.sin(Date.now()*0.01) * 5;
 
-vox.style.transform = "rotate(" + wobble + "deg)";
+vox.style.transform = "scaleX(" + direction + ") rotate(" + wobble + "deg)";
 
 });
 
@@ -1264,7 +1271,7 @@ document.addEventListener("touchend",()=>{
 isDragging = false;
 
 });
-    function checkBlocks(){
+function checkBlocks(){
 
 const voxRect = vox.getBoundingClientRect();
 const blocks = document.querySelectorAll(".section");
@@ -1284,13 +1291,37 @@ voxBottom <= blockTop + 20
 ){
 
 vox.style.top = (blockRect.top + window.scrollY - 100) + "px";
+vox.src = "shime15.png";
 
-vox.src = "shime15.png"; // спрайт сидения
+}
 
+});
+
+}
+    function climbBlocks(){
+
+const voxRect = vox.getBoundingClientRect();
+const blocks = document.querySelectorAll(".section");
+
+blocks.forEach(block => {
+
+const blockRect = block.getBoundingClientRect();
+
+if(
+voxRect.right > blockRect.left &&
+voxRect.left < blockRect.right &&
+voxRect.bottom > blockRect.top - 20 &&
+voxRect.bottom < blockRect.top + 20
+){
+
+vox.style.top = (blockRect.top + window.scrollY - 100) + "px";
+vox.src = "shime15.png";
+
+}
 
 });
 
-});
+}
         
 </script>
  
