@@ -560,7 +560,9 @@ pointer-events:auto;
 cursor:pointer;
 transition:transform 0.2s linear;
 }
-
+#vox{
+user-select:none;
+}
 
 /* мобильный фикс */
 
@@ -570,6 +572,9 @@ transition:transform 0.2s linear;
 width:80px;
 left:20px;
 bottom:10px;
+}
+    #vox{
+user-select:none;
 }
 
 }
@@ -1094,11 +1099,11 @@ function spawnFromEdge(){
 if(Math.random() > 0.5){
 x = -120;
 direction = 1;
-vox.style.transform = "scaleX(1)";
+vox.style.transform = "scaleX(1) translateZ(0)";
 }else{
 x = window.innerWidth + 120;
 direction = -1;
-vox.style.transform = "scaleX(-1)";
+vox.style.transform = "scaleX(-1) translateZ(0)";
 }
 
 }
@@ -1110,6 +1115,7 @@ spawnFromEdge();
 function animate(){
 
 if(sleeping) return;
+    if(isDragging) return;
 
 frame++;
 
@@ -1119,7 +1125,7 @@ frame = 0;
 
 vox.src = walkFrames[frame];
 
-x += direction * 1.5;
+x += direction * 0.6;
 
 if(x < -120 || x > window.innerWidth + 120){
 spawnFromEdge();
@@ -1129,7 +1135,7 @@ vox.style.left = x + "px";
 
 }
 
-setInterval(animate,200);
+setInterval(animate,60);
 
 /* случайный сон */
 
@@ -1184,14 +1190,16 @@ let isDragging = false;
 let offsetX = 0;
 let offsetY = 0;
 
-vox.addEventListener("mousedown", (e)=>{
+vox.addEventListener("mousedown",(e)=>{
 
 isDragging = true;
 
-offsetX = e.clientX - vox.offsetLeft;
-offsetY = e.clientY - vox.offsetTop;
+const rect = vox.getBoundingClientRect();
 
-vox.src = "vox_grab.png"; // спрайт когда хватаешь
+offsetX = e.clientX - rect.left;
+offsetY = e.clientY - rect.top;
+
+vox.src = "shime5.png";
 
 });
 
@@ -1199,11 +1207,17 @@ vox.src = "vox_grab.png"; // спрайт когда хватаешь
 
 if(isDragging){
 
-vox.style.left = e.pageX + "px";
-vox.style.top = e.pageY + "px";
+vox.style.left = (e.clientX - offsetX) + "px";
+vox.style.top = (e.clientY - offsetY) + "px";
+vox.style.bottom = "auto";
+    let wobble = Math.sin(Date.now()*0.01) * 5;
 
+vox.style.transform = "rotate(" + wobble + "deg)";
+
+vox.src = "shime7.png";\
+    
 checkBlocks(); // ВОТ ЭТА СТРОКА
-
+    
 }
 });
 
@@ -1213,7 +1227,41 @@ if(!isDragging) return;
 
 isDragging = false;
 
-vox.src = "vox_idle.png"; // обычный спрайт
+vox.src = "shime20.png"; // обычный спрайт
+
+});
+    /* ===== TOUCH DRAG (PHONE) ===== */
+
+vox.addEventListener("touchstart",(e)=>{
+
+isDragging = true;
+
+const touch = e.touches[0];
+const rect = vox.getBoundingClientRect();
+
+offsetX = touch.clientX - rect.left;
+offsetY = touch.clientY - rect.top;
+
+});
+
+document.addEventListener("touchmove",(e)=>{
+
+if(!isDragging) return;
+
+const touch = e.touches[0];
+
+vox.style.left = (touch.clientX - offsetX) + "px";
+vox.style.top = (touch.clientY - offsetY) + "px";
+vox.style.bottom = "auto";
+    let wobble = Math.sin(Date.now()*0.01) * 5;
+
+vox.style.transform = "rotate(" + wobble + "deg)";
+
+});
+
+document.addEventListener("touchend",()=>{
+
+isDragging = false;
 
 });
     function checkBlocks(){
@@ -1235,11 +1283,10 @@ voxBottom >= blockTop &&
 voxBottom <= blockTop + 20
 ){
 
-vox.style.top = (blockRect.top - 100) + "px";
+vox.style.top = (blockRect.top + window.scrollY - 100) + "px";
 
-vox.src = "vox_sit.png"; // спрайт сидения
+vox.src = "shime15.png"; // спрайт сидения
 
-}
 
 });
 
