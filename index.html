@@ -1095,7 +1095,9 @@ let gravity = 0.9;
 let falling = false;
 let stunned = false;
 let climbing = false;
+    let jumping = false;
     let y = 20;
+    let busy = false;
 vox.style.bottom = y + "px";
     
 /* СПРАЙТЫ */
@@ -1297,7 +1299,7 @@ vox.addEventListener("mousedown",(e)=>{
 isDragging = true;
 falling = false;
 
-offsetX = e.clientX - vox.offsetLeft;
+offsetX = e.clientX - x;
 lastX = e.clientX;
 
 });
@@ -1333,7 +1335,7 @@ falling = true;
 
 function physics(){
 
-if(falling && !isDragging){
+if(falling && !isDragging && !jumping){
 
 setState("fall");
 
@@ -1362,6 +1364,10 @@ setState("walk");
 
 },250);
 
+}
+
+if(y > window.innerHeight - 100){
+y = window.innerHeight - 100;
 }
 
 vox.style.bottom = y + "px";
@@ -1409,23 +1415,30 @@ return null;
 
 }
 function jumpToBlock(){
-    
-if(isDragging || falling || stunned || climbing) return;
+
+if(isDragging || falling || stunned || climbing || busy) return;
+
+busy = true;
 
 let blocks = document.querySelectorAll(".section, img");
 
-if(blocks.length === 0) return;
+if(blocks.length === 0){
+busy = false;
+return;
+}
 
 let target = blocks[Math.floor(Math.random()*blocks.length)];
 let rect = target.getBoundingClientRect();
 
 let targetX = rect.left + rect.width/2 - 40;
 let targetY = window.innerHeight - rect.top - 60;
-if(targetY < 80) targetY = 80;
-    if(targetY < 60) targetY = 60;
+
+if(targetY < 60) targetY = 60;
 
 setState("jump");
-    velocity = 16;
+
+velocity = 16;
+
 let jump = setInterval(()=>{
 
 if(Math.abs(x - targetX) > 5){
@@ -1434,30 +1447,28 @@ x += (targetX - x) * 0.15;
 
 vox.style.left = x + "px";
 
-/* дуга прыжка */
-
 velocity -= 0.9;
 y += velocity;
-    
+
 vox.style.bottom = y + "px";
 
-if(y >= targetY - 2){
+if(y <= targetY){
 
 clearInterval(jump);
 
 y = targetY;
-    velocity = 0;
+velocity = 0;
+
 vox.style.bottom = y + "px";
 
 setState("sit");
-    
-/* сидит на блоке */
 
 setTimeout(()=>{
-    
+
 setState("fall");
 falling = true;
 velocity = 0;
+busy = false;
 
 },3500);
 
