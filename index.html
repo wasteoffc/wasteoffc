@@ -1091,7 +1091,7 @@ let sleeping = false;
 let isDragging = false;
     let velocity = 0;
 let lastX = 0;
-let gravity = 1.2;
+let gravity = 0.9;
 let falling = false;
 let stunned = false;
 let climbing = false;
@@ -1174,6 +1174,8 @@ frame = 0;
 
 function animateSprites(){
     if(!sprites[state]) state = "idle";
+    if(x < -100) x = -100;
+if(x > window.innerWidth - 80) x = window.innerWidth - 80;
 
 const frames = sprites[state];
 
@@ -1190,7 +1192,7 @@ frame = 0;
 }
 
 setInterval(animateSprites,180);
-
+    
 /* появление */
 
 function spawnFromEdge(){
@@ -1222,7 +1224,9 @@ direction = 1;
 if(x > window.innerWidth - 120){
 direction = -1;
 }
-
+if(x < -80) x = -80;
+if(x > window.innerWidth - 80) x = window.innerWidth - 80;
+    
 vox.style.left = x + "px";
 if(direction === 1){
 vox.style.transform = "scaleX(1)";
@@ -1354,9 +1358,9 @@ setTimeout(()=>{
 stunned = false;
 setState("walk");
 
-},1500);
+},1200);
 
-},300);
+},250);
 
 }
 
@@ -1395,19 +1399,16 @@ for(let b of blocks){
 
 let r = b.getBoundingClientRect();
 
-if(Math.abs((x+50) - r.left) < 50 && r.height > 80)
-
+if(Math.abs((x+50) - r.left) < 50 && r.height > 80){
 return r;
-
 }
 
 }
 
 return null;
+
 }
 function jumpToBlock(){
-    
-velocity = 0;
     
 if(isDragging || falling || stunned || climbing) return;
 
@@ -1440,23 +1441,25 @@ y += velocity;
     
 vox.style.bottom = y + "px";
 
-if(y >= targetY){
+if(y >= targetY - 2){
 
 clearInterval(jump);
 
 y = targetY;
+    velocity = 0;
 vox.style.bottom = y + "px";
 
 setState("sit");
-
+    
 /* сидит на блоке */
 
 setTimeout(()=>{
-
+    
+setState("fall");
 falling = true;
 velocity = 0;
 
-},4000);
+},3500);
 
 }
 
@@ -1488,13 +1491,12 @@ clearInterval(climb);
 climbing = false;
 
 setState("sit");
-
+    
+velocity = 0;
 setTimeout(()=>{
 
-y = 20;
-vox.style.bottom = y + "px";
-
-setState("walk");
+falling = true;
+velocity = 0;
 
 },3000);
 
