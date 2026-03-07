@@ -576,6 +576,11 @@ bottom:10px;
     #vox{
 user-select:none;
 }
+    #vox{
+user-select:none;
+-webkit-user-drag:none;
+touch-action:none;
+}
 
 }
     /* ===== MOBILE TITLE FIX ===== */
@@ -1074,33 +1079,128 @@ else if (visits >= 6) {
 window.addEventListener("DOMContentLoaded", () => {
     });
 
+/* ===== VOX SHIMEJI SYSTEM ===== */
+
 const vox = document.getElementById("vox");
 
 let x = Math.random() * (window.innerWidth - 120);
 let direction = Math.random() > 0.5 ? 1 : -1;
-    
-setState("walk");
-    
-let sleeping = false;
-
-const sleepFrame = "shime21.png";
-
 let frame = 0;
+let state = "walk";
+let sleeping = false;
+let isDragging = false;
+    let velocity = 0;
+let lastX = 0;
+let gravity = 1.2;
+let falling = false;
+let stunned = false;
+let climbing = false;
+    let y = 20;
+vox.style.bottom = y + "px";
+    
+/* СПРАЙТЫ */
 
-/* появление из края */
+const sprites = {
+
+idle:[
+"shime1.png",
+"shime39.png",
+"shime40.png",
+"shime41.png"
+],
+
+walk:[
+"shime2.png",
+"shime3.png",
+"shime36.png",
+"shime37.png",
+"shime2.png"
+],
+
+sleep:[
+"shime20.png",
+"shime21.png",
+"shime20.png"
+],
+
+climb:[
+"shime12.png",
+"shime13.png",
+"shime14.png"
+],
+    
+dragSlow:[
+"shime5.png",
+"shime6.png"
+],
+
+dragFast:[
+"shime9.png",
+"shime10.png"
+],
+    fall:[
+"shime4.png"
+],
+    
+ hit:[
+"shime30.png"
+],
+
+stunned:[
+"shime21.png"
+],
+    sit:[
+"shime31.png",
+"shime33.png",
+"shime32.png",
+],
+
+jump:[
+"shime22.png"
+]
+   
+};
+
+/* смена состояния */
+
+function setState(newState){
+
+state = newState;
+frame = 0;
+
+}
+
+/* анимация */
+
+function animateSprites(){
+    if(!sprites[state]) state = "idle";
+
+const frames = sprites[state];
+
+if(!frames) return;
+
+vox.src = frames[frame];
+
+frame++;
+
+if(frame >= frames.length){
+frame = 0;
+}
+
+}
+
+setInterval(animateSprites,180);
+
+/* появление */
 
 function spawnFromEdge(){
-
-vox.style.position = "fixed";
 
 if(Math.random() > 0.5){
 x = -120;
 direction = 1;
-vox.style.transform = "scaleX(1)";
 }else{
 x = window.innerWidth + 120;
 direction = -1;
-vox.style.transform = "scaleX(-1)";
 }
 
 }
@@ -1111,15 +1211,9 @@ spawnFromEdge();
 
 function animate(){
 
-if(sleeping) return;
-    if(isDragging) return;
-
-if(state !== "walk"){
-setState("walk");
-}
+if(sleeping || isDragging || stunned || climbing) return;
 
 x += direction * 0.6;
-    vox.style.transform = "scaleX(" + direction + ")";
 
 if(x < -120){
 direction = 1;
@@ -1130,7 +1224,12 @@ direction = -1;
 }
 
 vox.style.left = x + "px";
-checkBlocks();
+if(direction === 1){
+vox.style.transform = "scaleX(1)";
+}else{
+vox.style.transform = "scaleX(-1)";
+}
+
 }
 
 setInterval(animate,60);
@@ -1139,7 +1238,7 @@ setInterval(animate,60);
 
 function randomSleep(){
 
-if(Math.random() < 0.3 && !sleeping){
+if(Math.random() < 0.25 && !sleeping){
 
 sleeping = true;
 
@@ -1148,6 +1247,7 @@ setState("sleep");
 setTimeout(()=>{
 
 sleeping = false;
+
 setState("walk");
 
 },4000);
@@ -1156,17 +1256,7 @@ setState("walk");
 
 }
 
-setTimeout(()=>{
-
-sleeping = false;
-
-},4000);
-
-}
-
-}
-
-setInterval(randomSleep,8000);
+setInterval(randomSleep,9000);
 
 /* реакция на музыку */
 
@@ -1189,52 +1279,43 @@ vox.addEventListener("click",()=>{
 vox.src = "shime38.png";
 
 setTimeout(()=>{
-vox.src ="shime43.png";
-},1500);
-    });
- 
-/* ===== DRAG VOX ===== */
 
-let isDragging = false;
-let offsetX = 0;
-let offsetY = 0;
+setState("walk");
+
+},700);
+
+});
+
+let offsetX;
 
 vox.addEventListener("mousedown",(e)=>{
 
 isDragging = true;
+falling = false;
 
-const rect = vox.getBoundingClientRect();
-
-offsetX = e.clientX - rect.left;
-offsetY = e.clientY - rect.top;
-
-vox.src = "shime5.png";
-    setState("drag");
+offsetX = e.clientX - vox.offsetLeft;
+lastX = e.clientX;
 
 });
 
-    document.addEventListener("mousemove", (e)=>{
+document.addEventListener("mousemove",(e)=>{
 
-if(isDragging){
+if(!isDragging) return;
 
-let newX = e.clientX - offsetX;
-let newY = e.clientY - offsetY;
+x = e.clientX - offsetX;
 
-newX = Math.max(0, Math.min(window.innerWidth - vox.offsetWidth, newX));
-newY = Math.max(0, Math.min(window.innerHeight - vox.offsetHeight, newY));
+velocity = Math.abs(e.clientX - lastX);
 
-vox.style.left = newX + "px";
-vox.style.top = newY + "px";
-vox.style.bottom = "auto";
-    let wobble = Math.sin(Date.now()*0.01) * 5;
+lastX = e.clientX;
 
-vox.style.transform = "scaleX(" + direction + ") rotate(" + wobble + "deg)";
-
-vox.src = "shime7.png";
-    
-checkBlocks(); // ВОТ ЭТА СТРОКА
-    
+if(velocity > 25){
+setState("dragFast");
+}else{
+setState("dragSlow");
 }
+
+vox.style.left = x + "px";
+
 });
 
 document.addEventListener("mouseup",()=>{
@@ -1242,196 +1323,208 @@ document.addEventListener("mouseup",()=>{
 if(!isDragging) return;
 
 isDragging = false;
-
-vox.src = "shime20.png"; // обычный спрайт
-
-});
-    /* ===== TOUCH DRAG (PHONE) ===== */
-
-vox.addEventListener("touchstart",(e)=>{
-
-isDragging = true;
-
-const touch = e.touches[0];
-const rect = vox.getBoundingClientRect();
-
-offsetX = touch.clientX - rect.left;
-offsetY = touch.clientY - rect.top;
+falling = true;
 
 });
 
-document.addEventListener("touchmove",(e)=>{
+function physics(){
 
-if(!isDragging) return;
+if(falling && !isDragging){
 
-const touch = e.touches[0];
+setState("fall");
 
-let newX = touch.clientX - offsetX;
-let newY = touch.clientY - offsetY;
+velocity += gravity;
+y -= velocity;
 
-newX = Math.max(0, Math.min(window.innerWidth - vox.offsetWidth, newX));
-newY = Math.max(0, Math.min(window.innerHeight - vox.offsetHeight, newY));
+if(y <= 20){
 
-vox.style.left = newX + "px";
-vox.style.top = newY + "px";
-vox.style.bottom = "auto";
-    let wobble = Math.sin(Date.now()*0.01) * 5;
+y = 20;
+velocity = 0;
+falling = false;
 
-vox.style.transform = "scaleX(" + direction + ") rotate(" + wobble + "deg)";
+setState("hit");
 
-});
+setTimeout(()=>{
 
-document.addEventListener("touchend",()=>{
+setState("stunned");
+stunned = true;
 
-isDragging = false;
+setTimeout(()=>{
 
-});
-function checkBlocks(){
+stunned = false;
+setState("walk");
 
-const voxRect = vox.getBoundingClientRect();
-const blocks = document.querySelectorAll(".section");
+},1500);
 
-blocks.forEach(block => {
+},300);
 
-const blockRect = block.getBoundingClientRect();
+}
 
-const voxBottom = voxRect.bottom;
-const blockTop = blockRect.top;
+vox.style.bottom = y + "px";
 
-if(
-voxRect.right > blockRect.left &&
-voxRect.left < blockRect.right &&
-voxBottom >= blockTop &&
-voxBottom <= blockTop + 20
-){
+}
 
-vox.style.top = (blockRect.top + window.scrollY - 100) + "px";
-vox.src = "shime15.png";
+}
 
+setInterval(physics,30);
+    
+    function findBlocks(){
+
+let blocks = document.querySelectorAll(".section, img");
+
+let valid = [];
+
+blocks.forEach(b=>{
+
+let r = b.getBoundingClientRect();
+
+if(r.width > 120 && r.height > 40){
+valid.push(r);
 }
 
 });
 
-}
-
-function walkRandom(){
-
-const maxX = window.innerWidth - vox.offsetWidth;
-const maxY = window.innerHeight - vox.offsetHeight;
-
-let x = Math.random() * maxX;
-let y = Math.random() * maxY;
-
-vox.style.transition = "all 2s linear";
-vox.style.left = x + "px";
-vox.style.top = y + "px";
+return valid;
 
 }
+function findWall(){
 
-setInterval(walkRandom, 7000);
+let blocks = document.querySelectorAll(".section");
 
-    function sitOnBlock(){
+for(let b of blocks){
 
-const blocks = document.querySelectorAll(".section");
+let r = b.getBoundingClientRect();
+
+if(Math.abs((x+50) - r.left) < 50 && r.height > 80)
+
+return r;
+
+}
+
+}
+
+return null;
+}
+function jumpToBlock(){
+    
+velocity = 0;
+    
+if(isDragging || falling || stunned || climbing) return;
+
+let blocks = document.querySelectorAll(".section, img");
 
 if(blocks.length === 0) return;
 
-let block = blocks[Math.floor(Math.random()*blocks.length)];
+let target = blocks[Math.floor(Math.random()*blocks.length)];
+let rect = target.getBoundingClientRect();
 
-let rect = block.getBoundingClientRect();
+let targetX = rect.left + rect.width/2 - 40;
+let targetY = window.innerHeight - rect.top - 60;
+if(targetY < 80) targetY = 80;
+    if(targetY < 60) targetY = 60;
 
-let x = rect.left + rect.width/2 - vox.offsetWidth/2;
-let y = rect.top - vox.offsetHeight;
+setState("jump");
+    velocity = 16;
+let jump = setInterval(()=>{
 
-vox.style.transition = "all 2s ease";
+if(Math.abs(x - targetX) > 5){
+x += (targetX - x) * 0.15;
+}
+
 vox.style.left = x + "px";
-vox.style.top = y + "px";
+
+/* дуга прыжка */
+
+velocity -= 0.9;
+y += velocity;
+    
+vox.style.bottom = y + "px";
+
+if(y >= targetY){
+
+clearInterval(jump);
+
+y = targetY;
+vox.style.bottom = y + "px";
+
+setState("sit");
+
+/* сидит на блоке */
+
+setTimeout(()=>{
+
+falling = true;
+velocity = 0;
+
+},4000);
+
+}
+
+},30);
+
+}
+function climbWall(){
+
+let wall = findWall();
+
+if(!wall) return;
+
+climbing = true;
+
+setState("climb");
+
+let top = window.innerHeight - wall.top - 40;
+
+let climb = setInterval(()=>{
+
+y += 4;
+
+vox.style.bottom = y + "px";
+
+if(y >= top){
+
+clearInterval(climb);
+
+climbing = false;
+
+setState("sit");
+
+setTimeout(()=>{
+
+y = 20;
+vox.style.bottom = y + "px";
+
+setState("walk");
+
+},3000);
+
+}
+
+},40);
+
+}
+setInterval(()=>{
+
+if(!isDragging && !falling && !climbing){
+
+if(Math.random() < 0.2){
+climbWall();
+}
+
+}
+
+},7000);
         setInterval(()=>{
 
-if(Math.random() < 0.4){
-sitOnBlock();
-}else{
-walkRandom();
-}
+if(!isDragging && !falling && !stunned && !climbing){
 
-},8000);
-
-}
-    const sprites = {
-
-idle: [
-"shime1.png",
-"shime39.png"
-],
-
-walk: [
-"shime2.png",
-"shime3.png",
-"shime2.png",
-"shime3.png"
-],
-
-sleep: [
-"shime21.png",
-"shime21.png"
-],
-
-climb: [
-"shime12.png",
-"shime13.png"
-],
-
-fall: [
-"shime4.png"
-]
-
-};
-
-let state = "idle";
-let animation;
-    function setState(newState){
-
-if(state === newState) return;
-
-state = newState;
-frame = 0;
-
-clearInterval(animation);
-
-animation = setInterval(()=>{
-
-const frames = sprites[state];
-
-vox.src = frames[frame];
-
-frame++;
-
-if(frame >= frames.length){
-frame = 0;
-}
-
-},200);
-        if(direction < 0){
-vox.style.transform = "scaleX(-1)";
-}else{
-vox.style.transform = "scaleX(1)";
-            function walkRandom(){
-
-if(isDragging || sleeping) return;
-
-const maxX = window.innerWidth - vox.offsetWidth;
-const maxY = window.innerHeight - vox.offsetHeight;
-
-let x = Math.random() * maxX;
-let y = Math.random() * maxY;
-
-vox.style.transition = "all 2s linear";
-vox.style.left = x + "px";
-vox.style.top = y + "px";
-
+if(Math.random() < 0.3){
+jumpToBlock();
 }
 
 }
+
+},6000);
         
 </script>
  
