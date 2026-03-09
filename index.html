@@ -1183,8 +1183,8 @@ frame = 0;
 
 function animateSprites(){
 
-if(busy || jumping || climbing) return;
-
+if(busy && state !== "sit") return;
+    
 if(!sprites[state]) state = "idle";
 
 const frames = sprites[state];
@@ -1225,7 +1225,7 @@ spawnFromEdge();
 
 function animate(){
 
-if(sleeping || isDragging || stunned || climbing) return;
+if(sleeping || isDragging || stunned || climbing || jumping) return;
 
 x += direction * 0.6;
 
@@ -1236,7 +1236,8 @@ direction = 1;
 if(x > window.innerWidth - 120){
 direction = -1;
 }
-
+x = Math.max(-120, Math.min(x, window.innerWidth - 120));
+    
 vox.style.left = x + "px";
 
 if(direction === 1){
@@ -1253,7 +1254,7 @@ setInterval(animate,60);
 
 function randomSleep(){
 
-if(Math.random() < 0.25 && !sleeping){
+if(Math.random() < 0.25 && !sleeping && !falling && !jumping && !climbing && !busy){
 
 sleeping = true;
 setState("sleep");
@@ -1282,7 +1283,9 @@ vox.src = "shime43.png";
 /* ===== клик ===== */
 
 vox.addEventListener("click",()=>{
-
+    
+if(jumping || climbing || falling) return;
+    
 vox.src = "shime38.png";
 
 setTimeout(()=>{
@@ -1330,7 +1333,8 @@ if(!isDragging) return;
 
 isDragging = false;
 falling = true;
-
+velocity = 5;
+    
 });
     /* ===== TOUCH DRAG (МОБИЛЬНЫЙ) ===== */
 
@@ -1349,7 +1353,9 @@ lastX = e.touches[0].clientX;
 document.addEventListener("touchmove",(e)=>{
 
 if(!isDragging) return;
-
+    
+e.preventDefault();
+    
 let newX = e.touches[0].clientX - offsetX;
 
 velocity = Math.abs(newX - x);
@@ -1369,8 +1375,7 @@ setState("dragSlow");
 }
 
 vox.style.left = x + "px";
-
-});
+},{ passive:false });
 
 document.addEventListener("touchend",()=>{
 
@@ -1396,17 +1401,25 @@ if(falling && !isDragging && !jumping && !climbing){
 setState("fall");
 
 velocity += gravity;
-y -= velocity;
+
+if(velocity > 20){
+velocity = 20;
+}
+
+y += velocity;
 
 if(y < 0){
 y = 0;
 velocity = 0;
-falling = false;
-setState("walk");
 }
 
-if(y > window.innerHeight - 120){
-y = window.innerHeight - 120;
+let ground = window.innerHeight - 120;
+
+if(y > ground){
+y = ground;
+velocity = 0;
+falling = false;
+setState("walk");
 }
 
 vox.style.bottom = y + "px";
@@ -1423,12 +1436,15 @@ function jumpToBlock(){
 
 if(isDragging || falling || stunned || climbing || busy) return;
 
+jumping = true;
+
 busy = true;
 
 let blocks = document.querySelectorAll(".section");
 
 if(blocks.length === 0){
 busy = false;
+jumping = false;
 return;
 }
 
@@ -1437,7 +1453,10 @@ let rect = target.getBoundingClientRect();
 
 let targetX = rect.left + rect.width/2 - 40;
 let targetY = window.innerHeight - rect.top - 60;
-
+if(targetY > window.innerHeight - 120){
+targetY = window.innerHeight - 120;
+}
+    
 setState("jump");
 
 velocity = 15;
@@ -1445,9 +1464,15 @@ velocity = 15;
 let jump = setInterval(()=>{
 
 x += (targetX - x) * 0.12;
+x = Math.max(-120, Math.min(x, window.innerWidth - 120));
 vox.style.left = x + "px";
 
 velocity -= 0.8;
+
+if(velocity < -15){
+velocity = -15;
+}
+
 y += velocity;
 
 vox.style.bottom = y + "px";
@@ -1456,6 +1481,8 @@ if(y >= targetY){
 
 clearInterval(jump);
 
+    jumping = false;
+    
 y = targetY;
 velocity = 0;
 
@@ -1494,12 +1521,21 @@ jumpToBlock();
     function climbWall(){
 
 let blocks = document.querySelectorAll(".section");
-
+        
+if(jumping) return;
+        
 for(let b of blocks){
 
 let r = b.getBoundingClientRect();
 
-if(Math.abs((x+50) - r.left) < 40){
+if(
+(
+Math.abs((x+50) - r.left) < 25 ||
+Math.abs((x+50) - r.right) < 25
+)
+&& y < window.innerHeight - r.bottom
+&& y > 10
+){
 
 climbing = true;
 
@@ -1510,7 +1546,6 @@ let top = window.innerHeight - r.top - 60;
 let climb = setInterval(()=>{
 
 y += 4;
-
 vox.style.bottom = y + "px";
 
 if(y >= top){
@@ -1522,10 +1557,8 @@ climbing = false;
 setState("sit");
 
 setTimeout(()=>{
-
 falling = true;
 setState("fall");
-
 },3000);
 
 }
@@ -1542,7 +1575,7 @@ return;
     
         setInterval(()=>{
 
-if(!isDragging && !falling && !climbing && !busy){
+if(!isDragging && !falling && !climbing && !busy && !jumping){
 
 if(Math.random() < 0.2){
 climbWall();
