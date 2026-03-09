@@ -1175,8 +1175,14 @@ jump:[
 /* ===== смена состояния ===== */
 
 function setState(newState){
+    
+if(state === newState) return;
+    
 state = newState;
 frame = 0;
+    
+vox.src = sprites[state][0];
+    
 }
 
 /* ===== анимация спрайтов ===== */
@@ -1236,6 +1242,7 @@ direction = 1;
 if(x > window.innerWidth - 120){
 direction = -1;
 }
+    
 x = Math.max(-120, Math.min(x, window.innerWidth - 120));
     
 vox.style.left = x + "px";
@@ -1303,7 +1310,7 @@ vox.addEventListener("mousedown",(e)=>{
 isDragging = true;
 falling = false;
 
-offsetX = e.clientX - x;
+offsetX = e.clientX - vox.offsetLeft;
 lastX = e.clientX;
 
 });
@@ -1313,6 +1320,7 @@ document.addEventListener("mousemove",(e)=>{
 if(!isDragging) return;
 
 x = e.clientX - offsetX;
+vox.style.left = x + "px";
 
 velocity = Math.abs(e.clientX - lastX);
 lastX = e.clientX;
@@ -1322,8 +1330,6 @@ setState("dragFast");
 }else{
 setState("dragSlow");
 }
-
-vox.style.left = x + "px";
 
 });
 
@@ -1400,7 +1406,7 @@ if(falling && !isDragging && !jumping && !climbing){
 
 setState("fall");
 
-velocity += gravity;
+velocity -= gravity;
 
 if(velocity > 20){
 velocity = 20;
