@@ -5,18 +5,68 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>wasteoffc</title>
 
-<!-- Загрузка шрифтов -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
 
 <style>
 
-/* Базовая настройка стилей */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+/* ===== LEVEL 10 EASTER EGG ===== */
+
+#voidOverlay {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    overflow: hidden;
+    animation: voidFlash 0.2s ease-in-out;
 }
+
+#voidOverlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.03) 0px,
+        rgba(255,255,255,0.03) 2px,
+        transparent 2px,
+        transparent 4px
+    );
+    animation: noiseMove 0.1s infinite linear;
+    pointer-events: none;
+}
+
+#voidText {
+    color: #ff0000;
+    font-family: monospace;
+    font-size: 22px;
+    text-align: center;
+    letter-spacing: 3px;
+    animation: textGlitch 0.15s infinite;
+}
+
+@keyframes voidFlash {
+    from { background: white; }
+    to { background: black; }
+}
+
+@keyframes noiseMove {
+    from { transform: translateY(0); }
+    to { transform: translateY(4px); }
+}
+
+@keyframes textGlitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(2px, -2px); }
+    60% { transform: translate(-1px, -1px); }
+    80% { transform: translate(1px, 1px); }
+    100% { transform: translate(0); }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
 
 body {
     height: 100vh;
@@ -26,7 +76,7 @@ body {
 }
 
 body::before {
-    content: '';
+    content: "";
     position: fixed;
     inset: 0;
     background: url("Tumblr_l_215707659405160.gif") no-repeat center center;
@@ -35,14 +85,15 @@ body::before {
 }
 
 body::after {
-    content: '';
+    content: "";
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
     z-index: -1;
 }
 
-/* Интерфейс предупреждений */
+/* WARNING */
+
 #warning {
     position: fixed;
     inset: 0;
@@ -73,7 +124,7 @@ body::after {
     border-radius: 10px;
     cursor: pointer;
     transition: 0.3s;
-    display: inline-block;
+    display: none;
 }
 
 #hackBtn:hover { transform: scale(1.1); }
@@ -111,7 +162,8 @@ body::after {
     display: none;
 }
 
-/* Основная страница */
+/* SITE */
+
 #siteContent { filter: blur(12px); transition: filter 1s ease; }
 
 .container {
@@ -153,9 +205,14 @@ h1 { font-family: 'Orbitron', sans-serif; font-size: 52px; }
 ul { list-style: none; }
 li { margin: 8px 0; color: #ddd; }
 
-footer { margin-top: 40px; font-size: 14px; color: #ccc; }
+    footer {
+    text-align: center;
+    margin: 40px auto;
+}
 
-/* Контактная секция */
+
+/* CONTACT */
+
 .contact-section {
     display: flex;
     flex-direction: column;
@@ -195,7 +252,11 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
     transform: scale(1.15);
 }
 
-/* Музыкальный плеер */
+footer { margin-top: 40px; font-size: 14px; color: #ccc; }
+
+/* PLAYER */
+
+
 .music-player {
     margin: 40px auto;
     max-width: 500px;
@@ -208,6 +269,22 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 .player-right {
     flex: 1;
 }
+
+/* центрирование контейнера для ПК и телефона */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* адаптив */
+@media (max-width: 600px) {
+    .music-player {
+        flex-direction: row; 
+    }
+}
+
+/* ===== WHITE GLASS BUTTONS ===== */
 
 .controls {
     display: flex;
@@ -228,6 +305,9 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
     transform: scale(0.9);
 }
 
+.controls button:active {
+    transform: scale(0.9);
+}
 .progress-bar {
     width: 100%;
     height: 6px;
@@ -239,6 +319,8 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 .progress { height: 100%; width: 0%; background: #4da6ff; }
 
 .time { font-size: 12px; margin-top: 5px; }
+    
+/* ===== REAL VINYL ===== */
 
 .vinyl-wrapper {
     width: 120px;
@@ -254,14 +336,14 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
         #111 40%,
         #000 60%,
         #111 75%,
-        #000 100%
-    );
+        #000 100%);
     position: relative;
     box-shadow: 0 0 20px rgba(77,166,255,0.6);
 }
 
+/* бороздки */
 .vinyl::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     border-radius: 50%;
@@ -274,6 +356,7 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
     );
 }
 
+/* центр */
 .vinyl-center {
     position: absolute;
     width: 45%;
@@ -292,8 +375,9 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
     object-fit: cover;
 }
 
+/* дырка */
 .vinyl::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 10%;
     height: 10%;
@@ -304,15 +388,15 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
     transform: translate(-50%, -50%);
     z-index: 3;
 }
-
+    
 @media (max-width: 600px) {
     .vinyl-wrapper {
         width: 90px;
         height: 90px;
     }
 }
+    /* ===== WHITE NEON GLOW ===== */
 
-/* Анимированный эффект винила */
 .vinyl.playing {
     box-shadow:
         0 0 15px rgba(255,255,255,0.6),
@@ -341,8 +425,8 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
             0 0 40px rgba(255,255,255,0.2);
     }
 }
+    /* ===== SOFT REVEAL EFFECT ===== */
 
-/* Скроллинговые секции */
 .section {
     opacity: 0;
     transform: translateY(40px);
@@ -355,8 +439,8 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
     transform: translateY(0);
     filter: blur(0);
 }
+    /* ===== CUSTOM TABLE ===== */
 
-/* Таблица информации */
 .info-table {
     width: 100%;
     border-collapse: collapse;
@@ -380,8 +464,8 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
 .info-table tr:hover {
     background: rgba(255,255,255,0.05);
 }
+    /* ===== INTERACTIVE GLASS BLOCK ===== */
 
-/* Блок с эффектом стекла */
 .interactive-block {
     cursor: pointer;
     transition: 0.3s ease;
@@ -392,17 +476,19 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
     line-height: 1.6;
 }
 
+/* hover */
 .interactive-block:hover {
     transform: scale(1.03);
     background: rgba(255,255,255,0.1);
     box-shadow: 0 0 25px rgba(255,255,255,0.2);
 }
 
+/* click effect */
 .interactive-block:active {
     transform: scale(0.98);
 }
+    /* ===== RETURN MESSAGE ===== */
 
-/* Сообщение возврата */
 .return-message {
     margin-top: 20px;
     font-size: 14px;
@@ -421,7 +507,7 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
     border-radius: 16px;
 }
 
-/* Свечение при наведении */
+/* Белое неоновое свечение */
 .section:hover {
     transform: translateY(-6px);
     box-shadow:
@@ -430,15 +516,14 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
         0 0 50px rgba(255,255,255,0.15);
 }
 
-/* Нажатый эффект */
+/* Лёгкий эффект нажатия */
 .section:active {
     transform: translateY(-2px);
     box-shadow:
         0 0 8px rgba(255,255,255,0.3),
         0 0 15px rgba(255,255,255,0.2);
 }
-
-.title-wrapper {
+    .title-wrapper{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -446,60 +531,81 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
     flex-wrap: nowrap;
 }
 
-.side-gif {
+.side-gif{
     width: 60px;
     height: auto;
 }
-
-/* Обычные стили */
-#vox {
-    position: fixed;
-    bottom: 20px;
-    left: 200px;
-    width: 110px;
-    z-index: 99999;
-    pointer-events: auto;
-    cursor: pointer;
-    transition: transform 0.2s linear;
+    .title-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: nowrap;
 }
 
-#vox {
-    user-select: none;
+.side-gif{
+    width: 60px;
+    height: auto;
+
+}
+/* обычный стиль */
+
+#vox{
+position: fixed;
+bottom:20px;
+left:200px;
+width:110px;
+z-index:99999;
+pointer-events:auto;
+cursor:pointer;
+transition:transform 0.2s linear;
+}
+#vox{
+user-select:none;
 }
 
-@media (max-width: 600px) {
-    #vox {
-        width: 80px;
-        left: 20px;
-        bottom: 10px;
-    }
-    #vox {
-        user-select: none;
-        -webkit-user-drag: none;
-        touch-action: none;
-    }
+/* мобильный фикс */
+
+@media (max-width:600px){
+
+#vox{
+width:80px;
+left:20px;
+bottom:10px;
+}
+    #vox{
+user-select:none;
+}
+    #vox{
+user-select:none;
+-webkit-user-drag:none;
+touch-action:none;
 }
 
-/* Mobile fix */
-@media (max-width: 600px) {
-    .title-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-    }
+}
+    /* ===== MOBILE TITLE FIX ===== */
 
-    .title-wrapper h1 {
-        font-size: 28px;
-        white-space: nowrap;
-    }
+@media (max-width: 600px){
 
-    .side-gif {
-        width: 32px;
-        flex-shrink: 0;
-    }
+.title-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
+.title-wrapper h1{
+    font-size: 28px;
+    white-space: nowrap;
+}
+
+.side-gif{
+    width: 32px;
+    flex-shrink: 0;
+
+  }
+    }
+    
 </style>
 </head>
 
@@ -519,11 +625,11 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
     </div>
 
     <div id="returnMessage" class="return-message"></div>
-</div>
+    </div>
 
 <div id="siteContent">
 
-    <!-- Основной контент -->
+    <!-- ОСНОВНОЙ САЙТ -->
     <div class="container">
 
         <div class="title-wrapper">
@@ -532,104 +638,114 @@ footer { margin-top: 40px; font-size: 14px; color: #ccc; }
             <img src="Tumblr_l_216030659304047.gif" class="side-gif">
         </div>
 
-        <p class="subtitle">
-            hehim > theythem sx6sp4sp9 choleric
-        </p>
-
-        <div class="section">
-            <h2>luv list 💘</h2>
-            <ul>
-                <li>Konch I lv u sm</li>
-                <li>Korffius, Leon, Terenty, Korka</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>my fandoms</h2>
-            <ul>
-                <li>BASEketball, Genshin Impact, Honkai Star Rail, Hunter × Hunter, Jujutsu Kaisen, Chainsaw Man, Hazbin Hotel, Helluva Boss, Heavy Rain, Mouthwashing, Papers Please, Night in the Woods, No I'm Not a Human, Mortal Kombat, Alien Stage, CountryHumans, FNaF, Twitch, RuRave, Evangelion, Milk Inside a Bag of Milk</li>
-            </ul>
-        </div>
-
-    </div>
+<p class="subtitle">
+hehim > theythem sx6sp4sp9 choleric
+</p>
 
 <div class="section">
-            <h2>kinn list</h2>
-            <ul>
-                <li>Killua, Chrollo, Norman Jayden, Kyle Broflovski, Mae Borowski, Nero, Vicho, Dirk Strider, Jimmy, Vox, Husk, Lucifer, Blitz, Scaramouche, Skirk, Blade, Luka, Narrator, Song Gi Tae, Ayanami Rei, Anton Zvezdochkin, Towa, Tomoe, Yoshiki, Samuel</li>
-            </ul>
+<h2>luv list &lt;3</h2>
+<ul>
+<li>Konch I lv u sm</li>
+<li>Korffius , Leon , Terenty , Korka</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>my fandoms</h2>
+<ul>
+<li>BASEketball , Genshin impact , Honkai Star Rail , Hunter x Hunter , Jujutsu Kaisen , Chainsaw man , Hazbin hotel , Helluva boss , Heavy rain , Mouthwashing , Papers please , Night in the woods , No I'm not a human , Mortal Kombat , Alien stage , Countryhumans , FNaF , Twitch , RuRave , Evangelion , Milk inside a bag of milk , Suicide boy , Beastars , Everything but your life , Blue period , Devil may cry , Cookie run games , Brawl stars , Homestuck , Slow damage , The Summer Hikaru dead , A room without windows , Watajel , Se trata de Nada , South Park , Kamisama kiss , Fight club , American psycho , Metal Family , Дух моей общаги , Regretevator , Ryan Gosling's films , Scott Pilgrim , Mob psycho 100 , Chiikawa , Cats warriors , Eurovision , I love Amy , One wheat mark , Spooky month , Toilet-bound Hanako-kun , The promise of hope n etc</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>kinn list</h2>
+<ul>
+<li>Killua , Chrollo , Norman jayden , Kyle Broflovski , Mae Borowski , Nero , Vicho , Dirk Strider , Jimmy , Vox , Husk , Lucifer , Blitz , Scaramouche , Skirk , Blade , Luka , Narrator , Song gi tae , Ayanami Rei , Антон Звездочкин , Towa , Tomoe , Yoshiki , Samuel</li>
+</ul>
+</div>
+    
+    <div class="section">
+<h2>DO NOT INTERACT</h2>
+<ul>
+<li>квирфобы ( гомофобы, трансфобы и тп ) , расисты , сексисты , поддержка войн и стран агрессоров , фанаты бебриной и дисы , фанаты/кинны вергилия , фанаты игра в кальмара , фанаты акиангелов , фанаты хаскердастов , бывшие знакомые / друзья , фанаты цоя и король и шут , поддержка педо / зоо / инцеста и тп , неумение различать субкультуры и поддерживать стереотипы о них , сильная ненависть к персам потому что они антагонисты </li>
+</ul>
+</div>
+    
+<div class="music-player">
+
+<div class="vinyl-wrapper">
+    <div class="vinyl" id="vinyl">
+        <div class="vinyl-center">
+            <img id="vinylCover" src="cover1.jpg">
         </div>
+    </div>
+</div>
 
-        <div class="section">
-            <h2>DO NOT INTERACT</h2>
-            <ul>
-                <li>квирфобы (гомофобы, трансфобы и т.п.), расисты, сексисты, поддержка войн и стран агрессоров, фанаты бебрины и дисы, фанаты/кинны Вергилия, фанаты игры в кальмара, фанаты AkiAngels, фанаты Хаскердстов, бывшие знакомые/друзья, фанаты Цоя и Король и Шут, поддержка педофилии/зоофилии/инцеста и т.п., неспособность различать субкультуры и поддержание стереотипов о них, сильная ненависть к персонажу, потому что он антагонист.</li>
-            </ul>
-        </div>
+<div class="player-right">
+    
+    <div class="controls">
+        <button id="prev">⏮</button>
+        <button id="play">▶</button>
+        <button id="next">⏭</button>
+    </div>
 
-        <div class="music-player">
-            <div class="vinyl-wrapper">
-                <div class="vinyl" id="vinyl">
-                    <div class="vinyl-center">
-                        <img id="vinylCover" src="cover1.jpg">
-                    </div>
-                </div>
-            </div>
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
 
-            <div class="player-right">
-                <div class="controls">
-                    <button id="prev">⏮</button>
-                    <button id="play">▶</button>
-                    <button id="next">⏭</button>
-                </div>
+    <div class="time">
+        <span id="current">0:00</span> /
+        <span id="duration">0:00</span>
+    </div>
 
-                <div class="progress-bar">
-                    <div class="progress" id="progress"></div>
-                </div>
+</div>
 
-                <div class="time">
-                    <span id="current">0:00</span> /
-                    <span id="duration">0:00</span>
-                </div>
-            </div>
+<audio id="audio"></audio>
 
-            <audio id="audio"></audio>
-        </div>
+</div>
 
-        <div class="contact-section">
-            <h2>Contact Us</h2>
-            <div class="contact-icons">
-                <a href="https://t.me/irlwhittman" target="_blank" class="icon">
-                    <svg viewBox="0 0 24 24"><path d="M9.04 15.47l-.39 5.48c.56 0 .8-.24 1.09-.53l2.62-2.5 5.43 3.98c1 .55 1.7.26 1.95-.92l3.54-16.6h0c.3-1.4-.5-1.95-1.48-1.6L1.67 9.37C.3 9.9.32 10.7 1.44 11.05l5.4 1.69L19.89 4.7c.63-.38 1.2-.17.73.21"/></svg>
-                </a>
+<div class="contact-section">
+<h2>contact us</h2>
+<div class="contact-icons">
 
-                <a href="https://www.tiktok.com/@nnervozz" target="_blank" class="icon">
-                    <svg viewBox="0 0 24 24"><path d="M16.6 5.82A4.77 4.77 0 0 1 15.5 3h-3v12.4a2.43 2.43 1 1 1-2.43-2.43c.2 0 .4.02.6.07V9.9a5.5 5.5 0 1 0 4.83 5.45V8.9a7.72 7.72 0 0 0 4.5 1.45V7.3a4.8 4.8 0 0 1-3.4-1.48z"/></svg>
-                </a>
+<a href="https://t.me/irlwhittman" target="_blank" class="icon">
+<svg viewBox="0 0 24 24">
+<path d="M9.04 15.47l-.39 5.48c.56 0 .8-.24 1.09-.53l2.62-2.5 5.43 3.98c1 .55 1.7.26 1.95-.92l3.54-16.6h0c.3-1.4-.5-1.95-1.48-1.6L1.67 9.37C.3 9.9.32 10.7 1.44 11.05l5.4 1.69L19.89 4.7c.63-.38 1.2-.17.73.21"/>
+</svg>
+</a>
 
-                <a href="https://www.tumblr.com/wasteoffc" target="_blank" class="icon">
-                    <svg viewBox="0 0 24 24"><path d="M14.3 21c-3.2 0-4.6-2.2-4.6-4.1V9H7V6.3c2.2-.8 3.1-2.8 3.3-4.3h2.4V6h3.3v3h-3.3v7.4c0 .9.5 1.4 1.3 1.4.6 0 1.2-.2 1.6-.4v2.7c-.6.4-1.7.9-3.3.9z"/></svg>
-                </a>
-            </div>
-        </div>
+<a href="https://www.tiktok.com/@nnervozz" target="_blank" class="icon">
+<svg viewBox="0 0 24 24">
+<path d="M16.6 5.82A4.77 4.77 0 0 1 15.5 3h-3v12.4a2.43 2.43 0 1 1-2.43-2.43c.2 0 .4.02.6.07V9.9a5.5 5.5 0 1 0 4.83 5.45V8.9a7.72 7.72 0 0 0 4.5 1.45V7.3a4.8 4.8 0 0 1-3.4-1.48z"/>
+</svg>
+</a>
 
-    </div> <!-- Конец контейнера -->
+<a href="https://www.tumblr.com/wasteoffc" target="_blank" class="icon">
+<svg viewBox="0 0 24 24">
+<path d="M14.3 21c-3.2 0-4.6-2.2-4.6-4.1V9H7V6.3c2.2-.8 3.1-2.8 3.3-4.3h2.4V6h3.3v3h-3.3v7.4c0 .9.5 1.4 1.3 1.4.6 0 1.2-.2 1.6-.4v2.7c-.6.4-1.7.9-3.3.9z"/>
+</svg>
+</a>
+
+</div>
+</div>
+        
+        </div> <!-- container -->
+
 
     <footer>© 2026 wasteoffc</footer>
 
-</div> <!-- Конец siteContent -->
-
+</div> <!-- siteContent -->
+    
 <img id="vox" src="shime1.png">
-
+    
 <audio id="hackSound">
-    <source src="hack-sound.mp3" type="audio/mpeg">
+<source src="hack-sound.mp3" type="audio/mpeg">
 </audio>
-
-</div> <!-- Конец всего содержания -->
 
 <script>
 
-// Общие настройки скриптов
+/* HACK JS оставлен без изменений */
+
 const titleText = "manager VOXTEK";
 const subText = "The information is classified";
 
@@ -647,7 +763,6 @@ const hackPercent = document.getElementById("hackPercent");
 let i = 0;
 let j = 0;
 
-// Анимация названия
 function typeTitleEffect() {
     if (i < titleText.length) {
         typeTitle.textContent += titleText.charAt(i);
@@ -658,7 +773,6 @@ function typeTitleEffect() {
     }
 }
 
-// Анимация подзаголовка
 function typeSubtitleEffect() {
     if (j < subText.length) {
         typeSubtitle.textContent += subText.charAt(j);
@@ -669,12 +783,11 @@ function typeSubtitleEffect() {
     }
 }
 
-// Начало анимации
 typeTitleEffect();
 
-// Действие при нажатии на кнопку взлома
 hackBtn.addEventListener("click", () => {
-    hackSound.play().catch(() => {});
+
+    hackSound.play().catch(()=>{});
     hackBtn.style.display = "none";
     typeSubtitle.textContent = "hacking...";
     warning.classList.add("glitch");
@@ -710,7 +823,7 @@ hackBtn.addEventListener("click", () => {
             setTimeout(() => {
                 warning.style.display = "none";
             }, 2000);
-
+            
             vox.style.display = "block";
         }
     }
@@ -718,7 +831,8 @@ hackBtn.addEventListener("click", () => {
     randomProgress();
 });
 
-// Настройки музыкального плеера
+/* PLAYER */
+
 const tracks = [
     { src: "nezhnoe-elektrichestvo.mp3", cover: "Tumblr_l_310287681426997.gif" },
     { src: "pyrokinesis_-_shershe_lya_fam_(SkySound.cc).mp3", cover: "Tumblr_l_310232819381341.jpg" },
@@ -736,20 +850,18 @@ const progressBar = document.querySelector(".progress-bar");
 const currentTimeEl = document.getElementById("current");
 const durationEl = document.getElementById("duration");
 const vinyl = document.getElementById("vinyl");
-let rotation = 0;
+    let rotation = 0;
 let speed = 0;
 let animationFrame;
 const vinylCover = document.getElementById("vinylCover");
 audio.volume = 0.7;
 
-// Функция загрузки трека
 function loadTrack(index) {
     audio.src = tracks[index].src;
     vinylCover.src = tracks[index].cover;
     audio.load();
 }
-
-// Анимация вращения пластинки
+    
 function animateVinyl() {
     rotation += speed;
     vinyl.style.transform = `rotate(${rotation}deg)`;
@@ -760,14 +872,12 @@ function animateVinyl() {
         cancelAnimationFrame(animationFrame);
     }
 }
-
-// Воспроизведение трека
 function playTrack() {
-    audio.play().catch(() => {});
+    audio.play().catch(()=>{});
     playBtn.textContent = "▐▐";
-
-    vinyl.classList.add("playing");
-
+    
+vinyl.classList.add("playing");
+    
     function accelerate() {
         if (speed < 0.6) {
             speed += 0.02;
@@ -779,7 +889,6 @@ function playTrack() {
     animateVinyl();
 }
 
-// Пауза трека
 function pauseTrack() {
     audio.pause();
     playBtn.textContent = "▶";
@@ -798,39 +907,41 @@ function pauseTrack() {
     slowDown();
 }
 
-// Переключение на следующий трек
 function nextTrack() {
     currentTrack = (currentTrack + 1) % tracks.length;
     loadTrack(currentTrack);
     playTrack();
 }
 
-// Возвращаемся к предыдущему треку
 function prevTrack() {
     currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
     loadTrack(currentTrack);
     playTrack();
 }
 
-// Автоматическое воспроизведение
 function startAutoplay() {
     loadTrack(currentTrack);
     playTrack();
 }
 
-// Обработчики кнопок
 playBtn.addEventListener("click", () => {
     if (audio.paused) playTrack();
     else pauseTrack();
 });
 
-nextBtn.addEventListener("click", nextTrack);
-prevBtn.addEventListener("click", prevTrack);
+nextBtn.addEventListener("click", () => {
+    let newIndex = (currentTrack + 1) % tracks.length;
+    smoothChangeTrack(newIndex);
+});
+prevBtn.addEventListener("click", () => {
+    let newIndex = (currentTrack - 1 + tracks.length) % tracks.length;
+    smoothChangeTrack(newIndex);
+});
+audio.addEventListener("ended", () => {
+    let newIndex = (currentTrack + 1) % tracks.length;
+    smoothChangeTrack(newIndex);
+});
 
-// Авто-переключение треков
-audio.addEventListener("ended", nextTrack);
-
-// Отображение прогресса воспроизведения
 audio.addEventListener("timeupdate", () => {
     if (!audio.duration) return;
     const percent = (audio.currentTime / audio.duration) * 100;
@@ -838,12 +949,10 @@ audio.addEventListener("timeupdate", () => {
     currentTimeEl.textContent = formatTime(audio.currentTime);
 });
 
-// Отображаем продолжительность трека
 audio.addEventListener("loadedmetadata", () => {
     durationEl.textContent = formatTime(audio.duration);
 });
 
-// Перемещение ползунка прогрессии
 progressBar.addEventListener("click", (e) => {
     if (!audio.duration) return;
     const width = progressBar.clientWidth;
@@ -851,14 +960,30 @@ progressBar.addEventListener("click", (e) => {
     audio.currentTime = (clickX / width) * audio.duration;
 });
 
-// Форматируем время трека
-function formatTime(time) {
+/* SWIPE */
+
+let startX = 0;
+
+vinyl.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+});
+
+vinyl.addEventListener("touchend", (e) => {
+    let endX = e.changedTouches[0].clientX;
+    let diff = startX - endX;
+
+    if (Math.abs(diff) > 50) {
+        if (diff > 0) nextTrack();
+        else prevTrack();
+    }
+});
+    function formatTime(time) {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60).toString().padStart(2, "0");
-    return `${minutes}:${seconds}`;
+    return minutes + ":" + seconds;
 }
+/* ===== REVEAL ON SCROLL ===== */
 
-// Показываем секции при прокрутке
 const sections = document.querySelectorAll(".section");
 
 const observer = new IntersectionObserver((entries) => {
@@ -875,7 +1000,8 @@ sections.forEach(section => {
     observer.observe(section);
 });
 
-// Система запоминания посещений
+// ===== EVOLUTION MEMORY SYSTEM (FIXED) =====
+
 const returnMessage = document.getElementById("returnMessage");
 const hackBtnMemory = document.getElementById("hackBtn");
 
@@ -889,37 +1015,40 @@ if (!visits) {
 
 localStorage.setItem("visits", visits);
 
-// Приветствуем пользователей, которые вернулись
+// показываем welcome back со 2 захода
 if (visits >= 2) {
     setTimeout(() => {
-        returnMessage.textContent = "Welcome back!";
+        returnMessage.textContent = "welcome back.";
         returnMessage.classList.add("show");
     }, 2000);
 }
 
-// Логика изменения текста кнопки в зависимости от числа посещений
+// эволюция кнопки
 if (visits === 1) {
-    hackBtnMemory.textContent = "Hack";
-} else if (visits === 2) {
-    hackBtnMemory.textContent = "Continue";
-} else if (visits === 3) {
-    hackBtnMemory.textContent = "Access Granted";
-} else if (visits === 4) {
-    hackBtnMemory.textContent = "You Again?";
-} else if (visits === 5) {
-    hackBtnMemory.textContent = "We Remember You";
-} else if (visits >= 6) {
-    hackBtnMemory.textContent = "Enter";
+    hackBtnMemory.textContent = "hack";
 }
-
-// Функция плавного перехода между треками
-function smoothChangeTrack(newIndex) {
-    const fadeDuration = 500; // Длительность затухания (мс)
+else if (visits === 2) {
+    hackBtnMemory.textContent = "continue";
+}
+else if (visits === 3) {
+    hackBtnMemory.textContent = "access granted";
+}
+else if (visits === 4) {
+    hackBtnMemory.textContent = "you again?";
+}
+else if (visits === 5) {
+    hackBtnMemory.textContent = "we remember you";
+}
+else if (visits >= 6) {
+    hackBtnMemory.textContent = "enter";
+}
+    function smoothChangeTrack(newIndex) {
+    const fadeDuration = 500; // длительность затухания (мс)
     const fadeSteps = 20;
     const stepTime = fadeDuration / fadeSteps;
     let currentVolume = audio.volume;
 
-    // Fade Out
+    // Fade OUT
     let fadeOut = setInterval(() => {
         if (audio.volume > 0.05) {
             audio.volume -= currentVolume / fadeSteps;
@@ -931,12 +1060,12 @@ function smoothChangeTrack(newIndex) {
 
             // Меняем трек
             currentTrack = newIndex;
-            loadTrack(currentTrack); // Ваша функция загрузки трека
+            loadTrack(currentTrack); // твоя функция загрузки трека
 
             audio.volume = 0;
             audio.play();
 
-            // Fade In
+            // Fade IN
             let fadeIn = setInterval(() => {
                 if (audio.volume < currentVolume) {
                     audio.volume += currentVolume / fadeSteps;
@@ -948,367 +1077,515 @@ function smoothChangeTrack(newIndex) {
         }
     }, stepTime);
 }
-
-// Вспомогательная функция загрузки страницы
+        
 window.addEventListener("DOMContentLoaded", () => {
-    // Ваш дополнительный стартовый код
-});
+    });
 
-<script>
-// Далее идет вся основная логика и обработчики событий, включая обработку Vox
+/* ===== VOX SHIMEJI SYSTEM ===== */
 
-// **Начальная конфигурация**
-const vox = document.getElementById("vox"); // Получаем ссылку на изображение персонажа
+const vox = document.getElementById("vox");
 
-let x = Math.random() * (window.innerWidth - 120); // Случайная позиция по горизонтали
-let y = 20; // Постоянная вертикальная координата
-let direction = Math.random() > 0.5 ? 1 : -1; // Направление движения
-let frame = 0; // Текущий кадр анимации
-let state = "walk"; // Начальное состояние персонажа
-let sleeping = false; // Спит ли персонаж
-let isDragging = false; // Перетаскиваем ли мы персонажа
-let velocity = 0; // Скорость движения
-let lastX = 0; // Последняя зафиксированная X-координата
-let gravity = 0.9; // Коэффициент притяжения (для эффекта падений)
-let falling = false; // Находится ли персонаж в состоянии свободного падения
-let stunned = false; // Заблокирован ли персонаж
-let climbing = false; // Восходит ли персонаж вверх по стене
-let jumping = false; // Прыгает ли персонаж
-let busy = false; // Занят ли персонаж другим действием
+let x = Math.random() * (window.innerWidth - 120);
+let y = 20;
 
-// Скрываем персонажа изначально
+let direction = Math.random() > 0.5 ? 1 : -1;
+let frame = 0;
+let state = "walk";
+
+let sleeping = false;
+let isDragging = false;
+let velocity = 0;
+let lastX = 0;
+
+let gravity = 0.9;
+let falling = false;
+let stunned = false;
+let climbing = false;
+let jumping = false;
+let busy = false;
+
 vox.style.display = "none";
 vox.style.bottom = y + "px";
 
-// **Анимационные циклы**
-function animate() {
-    if (sleeping || isDragging || stunned || climbing || jumping) return;
+/* ===== СПРАЙТЫ ===== */
 
-    x += direction * 0.6; // Перемещаем персонажа влево-вправо
-    vox.style.left = x + "px";
+const sprites = {
 
-    if (x <= -120 || x >= window.innerWidth - 120) {
-        direction *= -1; // Разворот направления при достижении края экрана
-    }
+idle:[
+"shime1.png",
+"shime39.png",
+"shime40.png",
+"shime41.png"
+],
 
-    // Обращаем направление взгляда персонажа при движении
-    if (direction === 1) {
-        vox.style.transform = "scaleX(1)";
-    } else {
-        vox.style.transform = "scaleX(-1)";
-    }
+walk:[
+"shime2.png",
+"shime3.png",
+"shime36.png",
+"shime37.png",
+"shime2.png"
+],
 
-    requestAnimationFrame(animate); // Продолжаем цикл анимации
+sleep:[
+"shime20.png",
+"shime21.png",
+"shime20.png"
+],
+
+climb:[
+"shime12.png",
+"shime13.png",
+"shime14.png"
+],
+
+dragSlow:[
+"shime5.png",
+"shime6.png"
+],
+
+dragFast:[
+"shime9.png",
+"shime10.png"
+],
+
+fall:[
+"shime4.png"
+],
+
+hit:[
+"shime30.png"
+],
+
+stunned:[
+"shime21.png"
+],
+
+sit:[
+"shime31.png",
+"shime33.png",
+"shime32.png"
+],
+
+jump:[
+"shime22.png"
+]
+
+};
+
+/* ===== смена состояния ===== */
+
+function setState(newState){
+state = newState;
+frame = 0;
 }
 
-// Запускаем основную анимацию
-animate();
+/* ===== анимация спрайтов ===== */
 
-// **Управление перемещением**
-function checkWindowBounds() {
-    const bottomLimit = window.innerHeight - 120; // Нижний предел окна
+function animateSprites(){
 
-    if (y >= bottomLimit) {
-        y = bottomLimit;
-        velocity = 0;
-        falling = false;
-        state = "walk";
-    }
+if(busy && state !== "sit") return;
+    
+if(!sprites[state]) state = "idle";
+
+const frames = sprites[state];
+
+if(!frames) return;
+
+vox.src = frames[frame];
+
+frame++;
+
+if(frame >= frames.length){
+frame = 0;
 }
 
-// **Применение силы тяжести**
-function applyGravity() {
-    if (falling && !isDragging && !jumping && !climbing) {
-        velocity += gravity;
-        y += velocity;
-        checkWindowBounds();
-    }
 }
 
-// **Проверка на сна персонажа**
-function randomSleep() {
-    if (
-        Math.random() < 0.2 &&
-        !sleeping &&
-        !falling &&
-        !jumping &&
-        !climbing &&
-        !busy
-    ) {
-        sleeping = true;
-        state = "sleep";
+setInterval(animateSprites,180);
 
-        setTimeout(() => {
-            sleeping = false;
-            state = "walk";
-        }, 4000); // Сон длится около 4 секунд
-    }
+/* ===== появление ===== */
+
+function spawnFromEdge(){
+
+if(Math.random() > 0.5){
+x = -120;
+direction = 1;
+}else{
+x = window.innerWidth + 120;
+direction = -1;
 }
 
-// Регулярно пытаемся заснуть
-setInterval(randomSleep, 9000);
+vox.style.left = x + "px";
 
-// **Реакция на музыку**
-audio.addEventListener("play", () => {
-    changeImage("shime42.png"); // Замена изображения при старте воспроизведения
+}
+
+spawnFromEdge();
+
+/* ===== движение ===== */
+
+function animate(){
+
+if(sleeping || isDragging || stunned || climbing || jumping) return;
+
+x += direction * 0.6;
+
+if(x < -120){
+direction = 1;
+}
+
+if(x > window.innerWidth - 120){
+direction = -1;
+}
+x = Math.max(-120, Math.min(x, window.innerWidth - 120));
+    
+vox.style.left = x + "px";
+
+if(direction === 1){
+vox.style.transform = "scaleX(1)";
+}else{
+vox.style.transform = "scaleX(-1)";
+}
+
+}
+
+setInterval(animate,60);
+
+/* ===== случайный сон ===== */
+
+function randomSleep(){
+
+if(Math.random() < 0.25 && !sleeping && !falling && !jumping && !climbing && !busy){
+
+sleeping = true;
+setState("sleep");
+
+setTimeout(()=>{
+sleeping = false;
+setState("walk");
+},4000);
+
+}
+
+}
+
+setInterval(randomSleep,9000);
+
+/* ===== реакция на музыку ===== */
+
+audio.addEventListener("play",()=>{
+vox.src = "shime42.png";
 });
 
-audio.addEventListener("pause", () => {
-    changeImage("shime43.png"); // Замена изображения при остановке воспроизведения
+audio.addEventListener("pause",()=>{
+vox.src = "shime43.png";
 });
 
-// **Реакция на клики пользователя**
-vox.addEventListener("click", () => {
-    if (jumping || climbing || falling) return;
+/* ===== клик ===== */
 
-    changeImage("shime38.png"); // Специальная картинка при клике
+vox.addEventListener("click",()=>{
+    
+if(jumping || climbing || falling) return;
+    
+vox.src = "shime38.png";
 
-    setTimeout(() => {
-        state = "walk";
-    }, 700);
+setTimeout(()=>{
+setState("walk");
+},700);
+
 });
 
-// **Drag-n-drop системы**
+/* ===== drag система ===== */
+
 let offsetX;
 
-vox.addEventListener("mousedown", (e) => {
-    isDragging = true;
-    falling = false;
+vox.addEventListener("mousedown",(e)=>{
 
-    offsetX = e.clientX - x;
-    lastX = e.clientX;
+isDragging = true;
+falling = false;
+
+offsetX = e.clientX - x;
+lastX = e.clientX;
+
 });
 
-document.addEventListener("mousemove", (e) => {
-    if (!isDragging) return;
+document.addEventListener("mousemove",(e)=>{
 
-    x = e.clientX - offsetX;
+if(!isDragging) return;
 
-    velocity = Math.abs(e.clientX - lastX);
-    lastX = e.clientX;
+x = e.clientX - offsetX;
 
-    if (velocity > 25) {
-        state = "dragFast";
-    } else {
-        state = "dragSlow";
-    }
+velocity = Math.abs(e.clientX - lastX);
+lastX = e.clientX;
 
-    vox.style.left = x + "px";
-});
-
-document.addEventListener("mouseup", () => {
-    if (!isDragging) return;
-
-    isDragging = false;
-    falling = true;
-    velocity = 5;
-});
-
-// **Touch Drag для мобильных устройств**
-vox.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-
-    isDragging = true;
-    falling = false;
-
-    offsetX = e.touches[0].clientX - x;
-    lastX = e.touches[0].clientX;
-});
-
-document.addEventListener("touchmove", (e) => {
-    if (!isDragging) return;
-
-    e.preventDefault();
-
-    let newX = e.touches[0].clientX - offsetX;
-
-    velocity = Math.abs(newX - x);
-
-    if (newX > x) {
-        vox.style.transform = "scaleX(1)";
-    } else {
-        vox.style.transform = "scaleX(-1)";
-    }
-
-    x = newX;
-
-    if (velocity > 20) {
-        state = "dragFast";
-    } else {
-        state = "dragSlow";
-    }
-
-    vox.style.left = x + "px";
-}, { passive: false });
-
-document.addEventListener("touchend", () => {
-    if (!isDragging) return;
-
-    isDragging = false;
-    falling = true;
-
-    if (x > lastX) {
-        vox.style.transform = "scaleX(1)";
-    } else {
-        vox.style.transform = "scaleX(-1)";
-    }
-});
-
-// **Физика падения**
-function physics() {
-    if (falling && !isDragging && !jumping && !climbing) {
-        setState("fall");
-
-        velocity += gravity;
-
-        if (velocity > 20) {
-            velocity = 20;
-        }
-
-        y += velocity;
-
-        let ground = window.innerHeight - 120;
-
-        if (y > ground) {
-            y = ground;
-            velocity = 0;
-            falling = false;
-            setState("walk");
-        }
-
-        vox.style.bottom = y + "px";
-    }
+if(velocity > 25){
+setState("dragFast");
+}else{
+setState("dragSlow");
 }
 
-// Периодическое применение физики
-setInterval(physics, 30);
+vox.style.left = x + "px";
 
-// **Прыжок на объекты**
-function jumpToBlock() {
-    if (isDragging || falling || stunned || climbing || busy) return;
+});
 
-    jumping = true;
+document.addEventListener("mouseup",()=>{
 
-    busy = true;
+if(!isDragging) return;
 
-    let blocks = document.querySelectorAll(".section");
+isDragging = false;
+falling = true;
+velocity = 5;
+    
+});
+    /* ===== TOUCH DRAG (МОБИЛЬНЫЙ) ===== */
 
-    if (blocks.length === 0) {
-        busy = false;
-        jumping = false;
-        return;
-    }
+vox.addEventListener("touchstart",(e)=>{
 
-    let target = blocks[Math.floor(Math.random() * blocks.length)];
-    let rect = target.getBoundingClientRect();
+e.preventDefault();
 
-    let targetX = rect.left + rect.width / 2 - 40;
-    let targetY = window.innerHeight - rect.top - 60;
-    if (targetY > window.innerHeight - 120) {
-        targetY = window.innerHeight - 120;
-    }
+isDragging = true;
+falling = false;
 
-    setState("jump");
+offsetX = e.touches[0].clientX - x;
+lastX = e.touches[0].clientX;
 
-    velocity = 15;
+});
 
-    let jump = setInterval(() => {
-        x += (targetX - x) * 0.12;
-        x = Math.max(-120, Math.min(x, window.innerWidth - 120));
-        vox.style.left = x + "px";
+document.addEventListener("touchmove",(e)=>{
 
-        velocity -= 0.8;
+if(!isDragging) return;
+    
+e.preventDefault();
+    
+let newX = e.touches[0].clientX - offsetX;
 
-        if (velocity < -15) {
-            velocity = -15;
-        }
+velocity = Math.abs(newX - x);
 
-        y += velocity;
-
-        vox.style.bottom = y + "px";
-
-        if (y >= targetY) {
-            clearInterval(jump);
-
-            jumping = false;
-
-            y = targetY;
-            velocity = 0;
-
-            vox.style.bottom = y + "px";
-
-            setState("sit");
-
-            setTimeout(() => {
-                falling = true;
-                setState("fall");
-                busy = false;
-            }, 3000);
-        }
-    }, 30);
+if(newX > x){
+vox.style.transform = "scaleX(1)";
+}else{
+vox.style.transform = "scaleX(-1)";
 }
 
-// Случайные прыжки
-setInterval(() => {
-    if (!isDragging && !falling && !stunned && !climbing) {
-        if (Math.random() < 0.3) {
-            jumpToBlock();
-        }
-    }
-}, 6000);
+x = newX;
 
-// **Система лазанья по стенам**
-function climbWall() {
-    let blocks = document.querySelectorAll(".section");
-
-    for (let block of blocks) {
-        let rect = block.getBoundingClientRect();
-
-        if (
-            (Math.abs((x + 50) - rect.left) < 25 || Math.abs((x + 50) - rect.right) < 25) &&
-            y < window.innerHeight - rect.bottom &&
-            y > 10
-        ) {
-            climbing = true;
-
-            setState("climb");
-
-            let top = window.innerHeight - rect.top - 60;
-
-            let climb = setInterval(() => {
-                y += 4;
-                vox.style.bottom = y + "px";
-
-                if (y >= top) {
-                    clearInterval(climb);
-
-                    climbing = false;
-
-                    setState("sit");
-
-                    setTimeout(() => {
-                        falling = true;
-                        setState("fall");
-                    }, 3000);
-                }
-            }, 40);
-
-            return;
-        }
-    }
+if(velocity > 20){
+setState("dragFast");
+}else{
+setState("dragSlow");
 }
 
-// Попытка залезть на стену каждые 7 секунд
-setInterval(() => {
-    if (!isDragging && !falling && !climbing && !busy && !jumping) {
-        if (Math.random() < 0.2) {
-            climbWall();
-        }
-    }
-}, 7000);
+vox.style.left = x + "px";
+},{ passive:false });
 
+document.addEventListener("touchend",()=>{
 
+if(!isDragging) return;
+
+isDragging = false;
+falling = true;
+    
+    if(x > lastX){
+vox.style.transform = "scaleX(1)";
+}else{
+vox.style.transform = "scaleX(-1)";
+}
+
+});
+
+/* ===== физика падения ===== */
+
+function physics(){
+
+if(falling && !isDragging && !jumping && !climbing){
+
+setState("fall");
+
+velocity += gravity;
+
+if(velocity > 20){
+velocity = 20;
+}
+
+y += velocity;
+
+if(y < 0){
+y = 0;
+velocity = 0;
+}
+
+let ground = window.innerHeight - 120;
+
+if(y > ground){
+y = ground;
+velocity = 0;
+falling = false;
+setState("walk");
+}
+
+vox.style.bottom = y + "px";
+
+}
+
+}
+
+setInterval(physics,30);
+
+/* ===== прыжок на блок ===== */
+
+function jumpToBlock(){
+
+if(isDragging || falling || stunned || climbing || busy) return;
+
+jumping = true;
+
+busy = true;
+
+let blocks = document.querySelectorAll(".section");
+
+if(blocks.length === 0){
+busy = false;
+jumping = false;
+return;
+}
+
+let target = blocks[Math.floor(Math.random()*blocks.length)];
+let rect = target.getBoundingClientRect();
+
+let targetX = rect.left + rect.width/2 - 40;
+let targetY = window.innerHeight - rect.top - 60;
+if(targetY > window.innerHeight - 120){
+targetY = window.innerHeight - 120;
+}
+    
+setState("jump");
+
+velocity = 15;
+
+let jump = setInterval(()=>{
+
+x += (targetX - x) * 0.12;
+x = Math.max(-120, Math.min(x, window.innerWidth - 120));
+vox.style.left = x + "px";
+
+velocity -= 0.8;
+
+if(velocity < -15){
+velocity = -15;
+}
+
+y += velocity;
+
+vox.style.bottom = y + "px";
+
+if(y >= targetY){
+
+clearInterval(jump);
+
+    jumping = false;
+    
+y = targetY;
+velocity = 0;
+
+vox.style.bottom = y + "px";
+
+setState("sit");
+
+setTimeout(()=>{
+
+falling = true;
+setState("fall");
+busy = false;
+
+},3000);
+
+}
+
+},30);
+
+}
+    
+/* ===== случайные прыжки ===== */
+
+setInterval(()=>{
+
+if(!isDragging && !falling && !stunned && !climbing){
+
+if(Math.random() < 0.3){
+jumpToBlock();
+}
+
+}
+
+},6000);
+    
+    function climbWall(){
+
+let blocks = document.querySelectorAll(".section");
+        
+if(jumping) return;
+        
+for(let b of blocks){
+
+let r = b.getBoundingClientRect();
+
+if(
+(
+Math.abs((x+50) - r.left) < 25 ||
+Math.abs((x+50) - r.right) < 25
+)
+&& y < window.innerHeight - r.bottom
+&& y > 10
+){
+
+climbing = true;
+
+setState("climb");
+
+let top = window.innerHeight - r.top - 60;
+
+let climb = setInterval(()=>{
+
+y += 4;
+vox.style.bottom = y + "px";
+
+if(y >= top){
+
+clearInterval(climb);
+
+climbing = false;
+
+setState("sit");
+
+setTimeout(()=>{
+falling = true;
+setState("fall");
+},3000);
+
+}
+
+},40);
+
+return;
+
+}
+
+}
+        
+}
+    
+        setInterval(()=>{
+
+if(!isDragging && !falling && !climbing && !busy && !jumping){
+
+if(Math.random() < 0.2){
+climbWall();
+}
+
+}
+
+},7000);
+        
 </script>
-
+ 
 </body>
 </html>
