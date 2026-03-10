@@ -824,7 +824,7 @@ hackBtn.addEventListener("click", () => {
                 warning.style.display = "none";
             }, 2000);
             
-            vox.style.display = "block";
+            vox.style.opacity = "1";
         }
     }
 
@@ -1104,7 +1104,7 @@ let climbing = false;
 let jumping = false;
 let busy = false;
 
-vox.style.display = "none";
+vox.style.opacity = "0";
 vox.style.bottom = y + "px";
 
 /* ===== СПРАЙТЫ ===== */
@@ -1213,15 +1213,13 @@ setInterval(animateSprites,180);
 
 function spawnFromEdge(){
 
-if(Math.random() > 0.5){
-x = -120;
-direction = 1;
-}else{
-x = window.innerWidth + 120;
-direction = -1;
-}
+x = Math.random() * (window.innerWidth - 150) + 20;
+y = 20;
+
+direction = Math.random() > 0.5 ? 1 : -1;
 
 vox.style.left = x + "px";
+vox.style.bottom = y + "px";
 
 }
 
@@ -1235,15 +1233,13 @@ if(sleeping || isDragging || stunned || climbing || jumping) return;
 
 x += direction * 0.6;
 
-if(x < -120){
+if(x < 0){
 direction = 1;
 }
 
-if(x > window.innerWidth - 120){
+if(x > window.innerWidth - 110){
 direction = -1;
 }
-    
-x = Math.max(-120, Math.min(x, window.innerWidth - 120));
     
 vox.style.left = x + "px";
 
@@ -1347,7 +1343,7 @@ if(!isDragging) return;
 
 isDragging = false;
 falling = true;
-velocity = 2;
+velocity = 5;
 
 });
     /* ===== TOUCH DRAG (МОБИЛЬНЫЙ) ===== */
