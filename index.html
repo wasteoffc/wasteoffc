@@ -1319,11 +1319,19 @@ document.addEventListener("mousemove",(e)=>{
 
 if(!isDragging) return;
 
-x = e.clientX - offsetX;
-vox.style.left = x + "px";
+let newX = e.clientX - offsetX;
+
+if(newX > x){
+direction = 1;
+}else{
+direction = -1;
+}
 
 velocity = Math.abs(e.clientX - lastX);
 lastX = e.clientX;
+
+x = newX;
+vox.style.left = x + "px";
 
 if(velocity > 25){
 setState("dragFast");
@@ -1339,8 +1347,8 @@ if(!isDragging) return;
 
 isDragging = false;
 falling = true;
-velocity = 5;
-    
+velocity = 2;
+
 });
     /* ===== TOUCH DRAG (МОБИЛЬНЫЙ) ===== */
 
@@ -1406,23 +1414,15 @@ if(falling && !isDragging && !jumping && !climbing){
 
 setState("fall");
 
-velocity -= gravity;
+// гравитация
+velocity += gravity;
 
-if(velocity > 20){
-velocity = 20;
-}
+// движение вниз
+y -= velocity;
 
-y += velocity;
-
-if(y < 0){
+// ограничение пола
+if(y <= 0){
 y = 0;
-velocity = 0;
-}
-
-let ground = window.innerHeight - 120;
-
-if(y > ground){
-y = ground;
 velocity = 0;
 falling = false;
 setState("walk");
